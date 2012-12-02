@@ -4,5 +4,6 @@
     <string name="hello_world">Hello world!</string>
     <string name="menu_settings">Settings</string>
     <string name="title_activity_all_off">AllOff</string>
+    <string name="instructions">Tap one of the icon below to begin. Tap again to turn off.</string>
 
 </resources>
