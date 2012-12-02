@@ -1,0 +1,27 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent" >
+    
+    <Button
+        android:id="@+id/magnify"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="magnify" />
+    <Button
+        android:id="@+id/light"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="light" />
+    <Button
+        android:id="@+id/notes"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="notes" />
+
+    <SurfaceView
+    android:id="@+id/preview"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"/>
+
+</RelativeLayout>

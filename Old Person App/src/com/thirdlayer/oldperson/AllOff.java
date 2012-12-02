@@ -43,22 +43,26 @@ public class AllOff extends Activity implements SurfaceHolder.Callback {
         mLightIsOn = false;
 
         // Camera setup for flashlight
-        mCamera = Camera.open();
+        //mCamera = Camera.open();
         mPreview = (SurfaceView) findViewById(R.id.preview);
         SurfaceHolder mHolder = mPreview.getHolder();
         mHolder.addCallback(this);
 
         mButtonMagnify.setOnClickListener(new OnClickListener() {
             public void onClick(View v) {
-                // Intent mGoToMagnify = new Intent(AllOff.this, Maginfy.class);
-                // AllOff.this.startActivity(mGoToMagnify);
+                 Intent mGoToMagnify = new Intent(AllOff.this, Magnify.class);
+                 mGoToMagnify.addFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
+                 mGoToMagnify.putExtra("lightIsOn", mLightIsOn);
+                 AllOff.this.startActivity(mGoToMagnify);
             }
         });
 
         mButtonNotes.setOnClickListener(new OnClickListener() {
             public void onClick(View v) {
-                // Intent mGoToMagnify = new Intent(AllOff.this, Notes.class);
-                // AllOff.this.startActivity(mGoToMagnify);
+                 Intent mGoToNotes = new Intent(AllOff.this, Notes.class);
+                 mGoToNotes.addFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
+                 mGoToNotes.putExtra("lightIsOn", mLightIsOn);
+                 AllOff.this.startActivity(mGoToNotes);
             }
         });
 
@@ -115,8 +119,6 @@ public class AllOff extends Activity implements SurfaceHolder.Callback {
     }
 
     public void surfaceDestroyed(SurfaceHolder holder) {
-        mCamera.stopPreview();
-        mCamera.release();
         mHolder = null;
     }
     
@@ -124,6 +126,22 @@ public class AllOff extends Activity implements SurfaceHolder.Callback {
     public void onDestroy() {
         mCamera.stopPreview();
         mCamera.release();
+    }
+    
+    @Override
+    public void onPause() {
+        super.onPause();
+        mCamera.stopPreview();
+        mCamera.release();
+    }
+    
+    @Override
+    public void onResume() {
+        super.onResume();
+        mCamera = Camera.open();
+        if (mLightIsOn) {
+            turnLightOn();
+        }
     }
 
 }
