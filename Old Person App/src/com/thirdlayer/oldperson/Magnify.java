@@ -1,6 +1,8 @@
 
 package com.thirdlayer.oldperson;
 
+import java.util.List;
+
 import android.hardware.Camera;
 import android.hardware.Camera.Parameters;
 import android.os.Bundle;
@@ -23,12 +25,13 @@ public class Magnify extends Activity {
     private boolean cameraConfigured = false;
     
     // UI variables
-    Button mButtonMagnify;
-    Button mButtonNotes;
-    Button mButtonLight;
+    private Button mButtonMagnify;
+    private Button mButtonNotes;
+    private Button mButtonLight;
     
     // State flags
-    Boolean mLightIsOn;
+    private Boolean mLightIsOn;
+    private int mApiVersion;
     
     // Passed Data
     Intent mIntent;
@@ -45,6 +48,7 @@ public class Magnify extends Activity {
         mButtonLight = (Button) findViewById(R.id.light);
         mIntent = getIntent();
         mLightIsOn = mIntent.getBooleanExtra("lightIsOn", false);
+        mApiVersion = android.os.Build.VERSION.SDK_INT;
 
         // Magnify variables
         mPreview = (SurfaceView) findViewById(R.id.preview);
@@ -163,15 +167,33 @@ public class Magnify extends Activity {
             }
 
             if (!cameraConfigured) {
-                Camera.Parameters parameters = mCamera.getParameters();
+                Camera.Parameters mParameters = mCamera.getParameters();
 //                Camera.Size size = getBestPreviewSize(width, height,
 //                        parameters);
 
 //                if (size != null) {
                     //parameters.set("orientation", "portrait");
                     mCamera.setDisplayOrientation(90);
+                    if (mParameters.isZoomSupported()) {
+                        int mMaxZoom = mParameters.getMaxZoom();
+                        if (mMaxZoom > 30) {
+                            mParameters.setZoom(30);
+                        } else {
+                            mParameters.setZoom(mMaxZoom);
+                        }
+                    }
+                    List<String> focusModes = mParameters.getSupportedFocusModes();
+                    if (focusModes.contains(Parameters.FOCUS_MODE_CONTINUOUS_PICTURE)) {
+                        mParameters.setFocusMode(Parameters.FOCUS_MODE_CONTINUOUS_PICTURE);
+                    } else if (focusModes.contains(Parameters.FOCUS_MODE_CONTINUOUS_VIDEO)) {
+                        mParameters.setFocusMode(Parameters.FOCUS_MODE_CONTINUOUS_VIDEO);
+                    }
+                   // if (mApiVersion > 9) {
+
+                     //   parameters.setFocusMode(Parameters.);
+                    //}
 //                    parameters.setPreviewSize(size.width, size.height);
-                    mCamera.setParameters(parameters);
+                    mCamera.setParameters(mParameters);
                     cameraConfigured = true;
                 }
             }
