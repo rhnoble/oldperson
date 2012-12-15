@@ -124,7 +124,6 @@ public class AllOff extends Activity implements SurfaceHolder.Callback {
     
     @Override
     public void onDestroy() {
-        mCamera.stopPreview();
         mCamera.release();
     }
     

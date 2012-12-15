@@ -5,7 +5,7 @@
 
     <uses-sdk
         android:minSdkVersion="8"
-        android:targetSdkVersion="15" />
+        android:targetSdkVersion="16" />
 
     <uses-permission android:name="android.permission.FLASHLIGHT" />
     <uses-permission android:name="android.permission.CAMERA" />
@@ -16,7 +16,8 @@
         android:theme="@style/AppTheme" >
         <activity
             android:name=".AllOff"
-            android:label="@string/title_activity_all_off" >
+            android:label="@string/title_activity_all_off"
+            android:screenOrientation="portrait" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -25,7 +26,8 @@
         </activity>
         <activity
             android:name=".Magnify"
-            android:label="@string/title_activity_magnify" >
+            android:label="@string/title_activity_magnify"
+            android:screenOrientation="portrait" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -34,7 +36,8 @@
         </activity>
         <activity
             android:name=".Notes"
-            android:label="@string/title_activity_notes" >
+            android:label="@string/title_activity_notes"
+            android:screenOrientation="portrait" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
