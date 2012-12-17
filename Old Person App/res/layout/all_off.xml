@@ -19,7 +19,8 @@
     android:orientation="horizontal"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:gravity="bottom" >
+    android:gravity="bottom"
+    android:padding="3dp" >
     
     <ImageView xmlns:android="http://schemas.android.com/apk/res/android"
         android:id="@+id/magnify"
@@ -28,7 +29,7 @@
         android:layout_weight="1"
         android:src="@drawable/glass"
         android:scaleType="centerInside"
-        android:padding="6dp"
+        android:padding="3dp"
         android:adjustViewBounds="true" />
 
     <ImageView xmlns:android="http://schemas.android.com/apk/res/android"
@@ -38,7 +39,7 @@
         android:layout_weight="1"
         android:src="@drawable/light"
         android:scaleType="centerInside"
-        android:padding="6dp"
+        android:padding="3dp"
         android:adjustViewBounds="true" />
     <ImageView xmlns:android="http://schemas.android.com/apk/res/android"
         android:id="@+id/notes"
@@ -46,7 +47,7 @@
         android:layout_height="wrap_content"
         android:layout_weight="1"
         android:adjustViewBounds="true"
-        android:padding="6dp"
+        android:padding="3dp"
         android:scaleType="centerInside"
         android:src="@drawable/notes" />
 
