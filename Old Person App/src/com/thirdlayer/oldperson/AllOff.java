@@ -14,14 +14,14 @@ import android.view.SurfaceHolder;
 import android.view.SurfaceView;
 import android.view.View;
 import android.view.View.OnClickListener;
-import android.widget.Button;
+import android.widget.ImageView;
 
 public class AllOff extends Activity implements SurfaceHolder.Callback {
 
     // UI
-    private Button mButtonMagnify;
-    private Button mButtonNotes;
-    private Button mButtonLight;
+    private ImageView mButtonMagnify;
+    private ImageView mButtonNotes;
+    private ImageView mButtonLight;
     private SurfaceView mPreview;
 
     // State flags
@@ -37,9 +37,9 @@ public class AllOff extends Activity implements SurfaceHolder.Callback {
         setContentView(R.layout.all_off);
 
         // Instantiate variables
-        mButtonMagnify = (Button) findViewById(R.id.magnify);
-        mButtonNotes = (Button) findViewById(R.id.notes);
-        mButtonLight = (Button) findViewById(R.id.light);
+        mButtonMagnify = (ImageView) findViewById(R.id.magnify);
+        mButtonNotes = (ImageView) findViewById(R.id.notes);
+        mButtonLight = (ImageView) findViewById(R.id.light);
         mLightIsOn = false;
 
         // Camera setup for flashlight

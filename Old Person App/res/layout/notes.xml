@@ -1,14 +1,56 @@
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent" >
+    android:layout_height="match_parent"
+    android:orientation="vertical" >
 
-    <TextView
-        android:layout_width="wrap_content"
+    <fragment android:name="com.thirdlayer.oldperson.NotesList"
+            android:id="@+id/notes"
+            android:layout_weight="1"
+            android:layout_width="match_parent"
+            android:layout_height="0dp" />
+    
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="horizontal"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:gravity="bottom" >
+    
+    <ImageView xmlns:android="http://schemas.android.com/apk/res/android"
+        android:id="@+id/magnify"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_centerHorizontal="true"
-        android:layout_centerVertical="true"
-        android:text="@string/hello_world"
-        tools:context=".Notes" />
+        android:layout_weight="1"
+        android:src="@drawable/glass"
+        android:scaleType="centerInside"
+        android:padding="6dp"
+        android:adjustViewBounds="true" />
 
-</RelativeLayout>
+    <ImageView xmlns:android="http://schemas.android.com/apk/res/android"
+        android:id="@+id/light"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:src="@drawable/light"
+        android:scaleType="centerInside"
+        android:padding="6dp"
+        android:adjustViewBounds="true" />
+
+    <ImageView xmlns:android="http://schemas.android.com/apk/res/android"
+        android:id="@+id/notes"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:adjustViewBounds="true"
+        android:padding="6dp"
+        android:scaleType="centerInside"
+        android:src="@drawable/notes" />
+
+    <SurfaceView
+        android:id="@+id/preview"
+        android:layout_width="1dp"
+        android:layout_height="1dp" />
+    
+</LinearLayout>
+
+</LinearLayout>
