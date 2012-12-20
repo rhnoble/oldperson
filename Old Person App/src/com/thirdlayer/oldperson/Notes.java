@@ -14,6 +14,26 @@ public class Notes extends FragmentActivity implements NotesList.OnNoteSelectedL
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.notes);
+        if (findViewById(R.id.fragmentcontainer) != null) {
+
+            // However, if we're being restored from a previous state,
+            // then we don't need to do anything and should return or else
+            // we could end up with overlapping fragments.
+            if (savedInstanceState != null) {
+                return;
+            }
+
+            // Create an instance of ExampleFragment
+            NotesList mNotesList = new NotesList();
+            
+            // In case this activity was started with special instructions from an Intent,
+            // pass the Intent's extras to the fragment as arguments
+            mNotesList.setArguments(getIntent().getExtras());
+            
+            // Add the fragment to the 'fragment_container' FrameLayout
+            getSupportFragmentManager().beginTransaction()
+                    .add(R.id.fragmentcontainer, mNotesList).commit();
+        }
     }
 
     @Override
@@ -37,7 +57,7 @@ public class Notes extends FragmentActivity implements NotesList.OnNoteSelectedL
         // fragment,
         // and add the transaction to the back stack so the user can navigate
         // back
-        transaction.replace(R.id.notes, editNote);
+        transaction.replace(R.id.fragmentcontainer, editNote);
         transaction.addToBackStack(null);
 
         // Commit the transaction

@@ -24,17 +24,22 @@ public class EditNote extends Fragment{
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,Bundle savedInstanceState) {
         super.onCreateView(inflater, container, savedInstanceState);
-        mStartingTitle = savedInstanceState.getString("title");
+        mStartingTitle = getArguments().getString("title");
         return inflater.inflate(R.layout.edit_note, container, false);
         
+    }
+    
+    @Override
+    public void onActivityCreated(Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
+        mTitleBox = (EditText) getView().findViewById(R.id.titlebox);
+        mContentBox = (EditText) getView().findViewById(R.id.contentbox);
     }
     
     @Override
     public void onAttach(Activity activity) {
         super.onAttach(activity);
         thisActivity = activity;
-        mTitleBox = (EditText) getView().findViewById(R.id.titlebox);
-        mContentBox = (EditText) getView().findViewById(R.id.contentbox);
     }
     
     @Override
