@@ -27,6 +27,9 @@ public class AllOff extends Activity implements SurfaceHolder.Callback {
     // State flags
     private Boolean mLightIsOn;
     
+ // Passed Data
+    Intent mIntent;
+    
     // Light functionality
     private Camera mCamera;
     private SurfaceHolder mHolder;
@@ -47,6 +50,8 @@ public class AllOff extends Activity implements SurfaceHolder.Callback {
         mPreview = (SurfaceView) findViewById(R.id.preview);
         SurfaceHolder mHolder = mPreview.getHolder();
         mHolder.addCallback(this);
+        mIntent = getIntent();
+        mLightIsOn = mIntent.getBooleanExtra("lightIsOn", false);
 
         mButtonMagnify.setOnClickListener(new OnClickListener() {
             public void onClick(View v) {

@@ -10,6 +10,7 @@ import android.view.ViewGroup;
 import android.view.View.OnClickListener;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.ListView;
 
 public class NotesList extends ListFragment {
     String[] mNoteTitles;
@@ -25,7 +26,6 @@ public class NotesList extends ListFragment {
     public void onAttach(Activity activity) {
         super.onAttach(activity);
         thisActivity = activity;
-        populateNoteList();
         try {
             mCallback = (OnNoteSelectedListener) activity;
         } catch (ClassCastException e) {
@@ -47,6 +47,7 @@ public class NotesList extends ListFragment {
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        populateNoteList();
         // Create an array adapter to store the list of notes
         ArrayAdapter<String> mAdapter = new ArrayAdapter<String>(inflater.getContext(),
                 android.R.layout.simple_list_item_1, mNoteTitles);
@@ -60,26 +61,19 @@ public class NotesList extends ListFragment {
     }
 
     private void populateNoteList() {
-        // mNoteTitles = thisActivity.fileList();
-        mNoteTitles = new String[11];
-        mNoteTitles[0] = "first";
-        mNoteTitles[1] = "second";
-        mNoteTitles[2] = "third";
-        mNoteTitles[3] = "third";
-        mNoteTitles[4] = "third";
-        mNoteTitles[5] = "third";
-        mNoteTitles[6] = "third";
-        mNoteTitles[7] = "third";
-        mNoteTitles[8] = "third";
-        mNoteTitles[9] = "third";
-        mNoteTitles[10] = "third";
-
+        mNoteTitles = thisActivity.fileList();
     }
 
-    // @Override
-    // public void onListItemClick(ListView l, View v, int position, long id) {
-    // showDetails(position);
-    // mCallback.onArticleSelected(position);
-    // }
+     @Override
+     public void onListItemClick(ListView l, View v, int position, long id) {
+     //showDetails(position);
+     mCallback.onNoteSelected(mNoteTitles[position]);
+     }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        populateNoteList();
+    }
 
 }
