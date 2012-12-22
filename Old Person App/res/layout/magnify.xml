@@ -1,27 +1,55 @@
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
+<?xml version="1.0" encoding="utf-8"?>
+
+  <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent" >
-    
-    <Button
-        android:id="@+id/magnify"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="magnify" />
-    <Button
-        android:id="@+id/light"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="light" />
-    <Button
-        android:id="@+id/notes"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="notes" />
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:layout_gravity="top">
+   
 
     <SurfaceView
     android:id="@+id/preview"
     android:layout_width="fill_parent"
-    android:layout_height="fill_parent"/>
+    android:layout_height="0dp"
+    android:layout_weight="1" />
+    
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="horizontal"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:gravity="bottom"
+    android:padding="3dp" >
+    
+    <ImageView xmlns:android="http://schemas.android.com/apk/res/android"
+        android:id="@+id/magnify"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:src="@drawable/glass_depressed"
+        android:scaleType="centerInside"
+        android:padding="3dp"
+        android:adjustViewBounds="true" />
 
-</RelativeLayout>
+    <ImageView xmlns:android="http://schemas.android.com/apk/res/android"
+        android:id="@+id/light"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:src="@drawable/light"
+        android:scaleType="centerInside"
+        android:padding="3dp"
+        android:adjustViewBounds="true" />
+
+    <ImageView xmlns:android="http://schemas.android.com/apk/res/android"
+        android:id="@+id/notes"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:adjustViewBounds="true"
+        android:padding="3dp"
+        android:scaleType="centerInside"
+        android:src="@drawable/notes" />
+
+</LinearLayout>
+
+</LinearLayout>

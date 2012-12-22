@@ -15,6 +15,7 @@ import android.view.SurfaceView;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.Toast;
 
 public class Magnify extends Activity {
@@ -25,9 +26,9 @@ public class Magnify extends Activity {
     private boolean cameraConfigured = false;
     
     // UI variables
-    private Button mButtonMagnify;
-    private Button mButtonNotes;
-    private Button mButtonLight;
+    private ImageView mButtonMagnify;
+    private ImageView mButtonNotes;
+    private ImageView mButtonLight;
     
     // State flags
     private Boolean mLightIsOn;
@@ -43,9 +44,9 @@ public class Magnify extends Activity {
         setContentView(R.layout.magnify);
         
         // Instantiate variables
-        mButtonMagnify = (Button) findViewById(R.id.magnify);
-        mButtonNotes = (Button) findViewById(R.id.notes);
-        mButtonLight = (Button) findViewById(R.id.light);
+        mButtonMagnify = (ImageView) findViewById(R.id.magnify);
+        mButtonNotes = (ImageView) findViewById(R.id.notes);
+        mButtonLight = (ImageView) findViewById(R.id.light);
         mIntent = getIntent();
         mLightIsOn = mIntent.getBooleanExtra("lightIsOn", false);
         mApiVersion = android.os.Build.VERSION.SDK_INT;
