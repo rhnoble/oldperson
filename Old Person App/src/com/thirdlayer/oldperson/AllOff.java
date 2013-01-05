@@ -14,18 +14,21 @@ import android.view.SurfaceHolder;
 import android.view.SurfaceView;
 import android.view.View;
 import android.view.View.OnClickListener;
-import android.widget.Button;
+import android.widget.ImageView;
 
 public class AllOff extends Activity implements SurfaceHolder.Callback {
 
     // UI
-    private View mButtonMagnify;
-    private View mButtonNotes;
-    private View mButtonLight;
+    private ImageView mButtonMagnify;
+    private ImageView mButtonNotes;
+    private ImageView mButtonLight;
     private SurfaceView mPreview;
 
     // State flags
     private Boolean mLightIsOn;
+    
+ // Passed Data
+    Intent mIntent;
     
     // Light functionality
     private Camera mCamera;
@@ -37,9 +40,9 @@ public class AllOff extends Activity implements SurfaceHolder.Callback {
         setContentView(R.layout.all_off);
 
         // Instantiate variables
-        mButtonMagnify = (View) findViewById(R.id.magnify);
-        mButtonNotes = (View) findViewById(R.id.notes);
-        mButtonLight = (View) findViewById(R.id.light);
+        mButtonMagnify = (ImageView) findViewById(R.id.magnify);
+        mButtonNotes = (ImageView) findViewById(R.id.notes);
+        mButtonLight = (ImageView) findViewById(R.id.light);
         mLightIsOn = false;
 
         // Camera setup for flashlight
@@ -47,6 +50,8 @@ public class AllOff extends Activity implements SurfaceHolder.Callback {
         mPreview = (SurfaceView) findViewById(R.id.preview);
         SurfaceHolder mHolder = mPreview.getHolder();
         mHolder.addCallback(this);
+        mIntent = getIntent();
+        mLightIsOn = mIntent.getBooleanExtra("lightIsOn", false);
 
         mButtonMagnify.setOnClickListener(new OnClickListener() {
             public void onClick(View v) {

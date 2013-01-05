@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="#fdeec0"
+    android:padding="8dp" >
+    
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="2dp" />
+    
+    <EditText 
+        android:id="@+id/titlebox"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:inputType="text"
+        android:textSize="26dp"
+        android:hint="title" />
+    <EditText 
+        android:id="@+id/contentbox"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:inputType="text"
+        android:textSize="26dp"
+        android:hint="content"
+        android:gravity="top" />
+</LinearLayout>
