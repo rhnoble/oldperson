@@ -3,17 +3,18 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:paddingLeft="8dp"
-    android:paddingRight="8dp" >
+    android:padding="8dp" >
     
     <Button
+        android:layout_gravity="right"
         android:id="@+id/newnote"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="New Note"
-        android:textSize="20dp"
-        android:background="#4dd38f"
-        android:padding="6dp" />
+        android:textSize="24dp"
+        android:textColor="#FFFFFF"
+        android:padding="10dp"
+        android:background="@drawable/newnote_button" />
         
 
     <ListView

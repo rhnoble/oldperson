@@ -3,12 +3,43 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:background="#fdeec0"
+    android:background="#FEF4D7"
     android:padding="8dp" >
     
     <View
         android:layout_width="match_parent"
         android:layout_height="2dp" />
+    
+    <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:background="#FEF4D7"
+        android:paddingBottom="8dp" >
+    
+        <Button
+            android:layout_alignParentLeft="true"
+            android:id="@+id/noteslist"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Notes"
+            android:textSize="24dp"
+            android:textColor="#FFFFFF"
+            android:padding="10dp"
+            android:background="@drawable/notes_button" />
+        
+        <Button
+            android:layout_alignParentRight="true"
+            android:id="@+id/done"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Done"
+            android:textSize="24dp"
+            android:textColor="#FFFFFF"
+            android:padding="10dp"
+            android:background="@drawable/newnote_button" />
+        
+    </RelativeLayout>
     
     <EditText 
         android:id="@+id/titlebox"
