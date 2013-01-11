@@ -12,9 +12,12 @@ import android.app.Activity;
 import android.content.Context;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentTransaction;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.View.OnClickListener;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
@@ -25,10 +28,17 @@ public class EditNote extends Fragment {
     EditText mContentBox;
     String mStartingTitle;
     FileOutputStream fosContent;
-    OnNoteSavedListener mCallback;
-    
+    OnNoteSavedListener mCallbackSaved;
+    NoteDoneListener mCallbackDone;
+    Button mButtonDone;
+    Button mButtonDelete;
+
     public interface OnNoteSavedListener {
         public void onNoteSaved(String title);
+    }
+
+    public interface NoteDoneListener {
+        public void noteDone();
     }
 
     @Override
@@ -46,7 +56,26 @@ public class EditNote extends Fragment {
         mContentBox = (EditText) getView().findViewById(R.id.contentbox);
         mTitleBox.setText(mStartingTitle);
         mContentBox.setText(getContent(mStartingTitle));
+        mButtonDone = (Button) getView().findViewById(R.id.done);
+        mButtonDelete = (Button) getView().findViewById(R.id.delete);
+
+        mButtonDone.setOnClickListener(new OnClickListener() {
+            public void onClick(View v) {
+                mCallbackDone.noteDone();
+            }
+        });
+
+        mButtonDelete.setOnClickListener(new OnClickListener() {
+            public void onClick(View v) {
+                thisActivity.deleteFile(mStartingTitle);
+                mTitleBox.setText("");
+                mContentBox.setText("");
+                mCallbackDone.noteDone();
+            }
+        });
+
     }
+    
 
     private String getContent(String title) {
         FileInputStream fisContent;
@@ -77,37 +106,54 @@ public class EditNote extends Fragment {
         super.onAttach(activity);
         thisActivity = activity;
         try {
-            mCallback = (OnNoteSavedListener) activity;
+            mCallbackDone = (NoteDoneListener) activity;
+        } catch (ClassCastException e) {
+            throw new ClassCastException(activity.toString() + " must imlpement NoteDoneListener");
+        }
+        try {
+            mCallbackSaved = (OnNoteSavedListener) activity;
         } catch (ClassCastException e) {
             throw new ClassCastException(activity.toString() + " must imlpement OnNoteSelected");
         }
+    }
+    
+    @Override
+    public void onResume() {
+        super.onResume();
+        int x = 1;
     }
 
     @Override
     public void onPause() {
         String mTitleToSave;
-        if (mTitleBox.getText().toString() == "") {
-            if (mContentBox.getText().toString().length() > 15) {
-                mTitleToSave = mContentBox.getText().toString().substring(0, 14);
+        if (!(mTitleBox.getText().toString().equals("") && mContentBox.getText().toString()
+                .equals(""))) {
+            if (mTitleBox.getText().toString().equals("")) {
+                if (mContentBox.getText().toString().length() > 15) {
+                    mTitleToSave = mContentBox.getText().toString().substring(0, 14);
+                } else {
+                    mTitleToSave = mContentBox.getText().toString();
+                }
             } else {
-                mTitleToSave = mContentBox.getText().toString();
+                mTitleToSave = mTitleBox.getText().toString();
+            }
+            try {
+                FileOutputStream fosContent = thisActivity.openFileOutput(mTitleToSave,
+                        Context.MODE_PRIVATE);
+                fosContent.write(mContentBox.getText().toString().getBytes());
+                fosContent.close();
+                mCallbackSaved.onNoteSaved(mTitleToSave);
+            } catch (FileNotFoundException e) {
+                // TODO Auto-generated catch block
+                e.printStackTrace();
+                Toast.makeText(thisActivity, "file not found exception", Toast.LENGTH_LONG);
+            } catch (IOException e) {
+                // TODO Auto-generated catch block
+                e.printStackTrace();
+                Toast.makeText(thisActivity, "file io exception", Toast.LENGTH_LONG);
             }
         } else {
-            mTitleToSave = mTitleBox.getText().toString();
-        }
-        try {
-            FileOutputStream fosContent = thisActivity.openFileOutput(mTitleToSave, Context.MODE_PRIVATE);
-            fosContent.write(mContentBox.getText().toString().getBytes());
-            fosContent.close();
-            mCallback.onNoteSaved(mTitleToSave);
-        } catch (FileNotFoundException e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
-            Toast.makeText(thisActivity, "file not found exception", Toast.LENGTH_LONG);
-        } catch (IOException e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
-            Toast.makeText(thisActivity, "file io exception", Toast.LENGTH_LONG);
+            mCallbackSaved.onNoteSaved("");
         }
         super.onPause();
     }

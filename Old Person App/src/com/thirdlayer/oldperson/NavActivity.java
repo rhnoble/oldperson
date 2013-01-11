@@ -1,7 +1,6 @@
 
 package com.thirdlayer.oldperson;
 
-import java.io.IOException;
 import java.util.List;
 
 import android.content.Intent;
@@ -9,7 +8,6 @@ import android.content.pm.PackageManager;
 import android.hardware.Camera;
 import android.hardware.Camera.Parameters;
 import android.os.Bundle;
-import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentTransaction;
 import android.util.Log;
@@ -18,10 +16,11 @@ import android.view.SurfaceHolder;
 import android.view.SurfaceView;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.view.Window;
 import android.widget.ImageView;
 import android.widget.Toast;
 
-public class NavActivity extends FragmentActivity implements NotesList.OnNoteSelectedListener, EditNote.OnNoteSavedListener/*,
+public class NavActivity extends FragmentActivity implements NotesList.OnNoteSelectedListener, EditNote.OnNoteSavedListener, EditNote.NoteDoneListener/*,
         SurfaceHolder.Callback*/ {
 
     String mSelectedNote;
@@ -49,6 +48,7 @@ public class NavActivity extends FragmentActivity implements NotesList.OnNoteSel
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        this.requestWindowFeature(Window.FEATURE_NO_TITLE);
         setContentView(R.layout.navigation);
         if (findViewById(R.id.fragmentcontainer) != null) {
 
@@ -80,6 +80,7 @@ public class NavActivity extends FragmentActivity implements NotesList.OnNoteSel
         inPreview = false;
         cameraConfigured = false;
         mNoteIsOpen = false;
+        mLastNoteOpen = "";
 
         // Camera setup for flashlight
         // mCamera = Camera.open();
@@ -249,7 +250,17 @@ public class NavActivity extends FragmentActivity implements NotesList.OnNoteSel
 
     @Override
     public void onDestroy() {
-        mCamera.release();
+        if (inPreview) {
+            mCamera.stopPreview();
+            inPreview = false;
+        }
+        if (mCamera != null) {
+            mCamera.release();
+            mCamera = null;
+            cameraConfigured = false;
+        }
+        super.onDestroy();
+        
     }
 
     @Override
@@ -259,10 +270,11 @@ public class NavActivity extends FragmentActivity implements NotesList.OnNoteSel
             inPreview = false;
         }
 
-        mCamera.release();
-        mCamera = null;
-        cameraConfigured = false;
-
+        if (mCamera != null) {
+            mCamera.release();
+            mCamera = null;
+            cameraConfigured = false;
+        }
         super.onPause();
     }
 
@@ -348,6 +360,18 @@ public class NavActivity extends FragmentActivity implements NotesList.OnNoteSel
             }
         }
         // }
+    }
+
+    public void noteDone() {
+        NotesList notesList = new NotesList();
+        FragmentTransaction transaction = getSupportFragmentManager()
+                .beginTransaction();
+        transaction.replace(R.id.fragmentcontainer, notesList);
+        transaction.addToBackStack(null);
+
+        // Commit the transaction
+        transaction.commit();
+        mCurrentTool = "Notes List";
     }
 
 }
