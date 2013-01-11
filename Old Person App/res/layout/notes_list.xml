@@ -14,8 +14,11 @@
         android:text="New Note"
         android:textSize="24dp"
         android:textColor="#FFFFFF"
-        android:padding="10dp"
-        android:background="@drawable/newnote_button" />
+        android:paddingLeft="12dp"
+        android:paddingRight="12dp"
+        android:paddingTop="4dp"
+        android:paddingBottom="4dp"
+        android:background="@drawable/green_button" />
         
 
     <ListView
