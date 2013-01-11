@@ -19,14 +19,17 @@
     
         <Button
             android:layout_alignParentLeft="true"
-            android:id="@+id/noteslist"
+            android:id="@+id/delete"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Notes"
+            android:text="Delete"
             android:textSize="24dp"
             android:textColor="#FFFFFF"
-            android:padding="10dp"
-            android:background="@drawable/notes_button" />
+            android:paddingLeft="12dp"
+            android:paddingRight="12dp"
+            android:paddingTop="4dp"
+            android:paddingBottom="4dp"
+            android:background="@drawable/delete_button" />
         
         <Button
             android:layout_alignParentRight="true"
@@ -36,8 +39,11 @@
             android:text="Done"
             android:textSize="24dp"
             android:textColor="#FFFFFF"
-            android:padding="10dp"
-            android:background="@drawable/newnote_button" />
+            android:paddingLeft="12dp"
+            android:paddingRight="12dp"
+            android:paddingTop="4dp"
+            android:paddingBottom="4dp"
+            android:background="@drawable/green_button" />
         
     </RelativeLayout>
     
