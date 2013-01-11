@@ -7,4 +7,5 @@
     <string name="instructions">Tap one of the icons below to begin. Tap again to turn off.</string>
     <string name="title_activity_magnify">Magnify</string>
     <string name="title_activity_notes">Notes</string>
+    <string name="title_activity_navactivity">Old Person App</string>
 </resources>
