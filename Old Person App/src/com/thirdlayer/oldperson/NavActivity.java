@@ -21,8 +21,8 @@ import android.view.View.OnClickListener;
 import android.widget.ImageView;
 import android.widget.Toast;
 
-public class NavActivity extends FragmentActivity implements NotesList.OnNoteSelectedListener,
-        SurfaceHolder.Callback {
+public class NavActivity extends FragmentActivity implements NotesList.OnNoteSelectedListener, EditNote.OnNoteSavedListener/*,
+        SurfaceHolder.Callback*/ {
 
     String mSelectedNote;
     // UI
@@ -36,6 +36,8 @@ public class NavActivity extends FragmentActivity implements NotesList.OnNoteSel
     private Boolean cameraConfigured;
     private Boolean inPreview;
     private String mCurrentTool;
+    private Boolean mNoteIsOpen;
+    private String mLastNoteOpen;
 
     // Passed Data
     Intent mIntent;
@@ -77,6 +79,7 @@ public class NavActivity extends FragmentActivity implements NotesList.OnNoteSel
         mLightIsOn = false;
         inPreview = false;
         cameraConfigured = false;
+        mNoteIsOpen = false;
 
         // Camera setup for flashlight
         // mCamera = Camera.open();
@@ -103,7 +106,7 @@ public class NavActivity extends FragmentActivity implements NotesList.OnNoteSel
                     MagnifyClear magnifyClear = new MagnifyClear();
                     FragmentTransaction transaction = getSupportFragmentManager()
                             .beginTransaction();
-                    transaction.replace(R.id.fragmentcontainer, magnifyClear, "Magnify");
+                    transaction.replace(R.id.fragmentcontainer, magnifyClear);
                     transaction.addToBackStack(null);
 
                     // Commit the transaction
@@ -114,13 +117,44 @@ public class NavActivity extends FragmentActivity implements NotesList.OnNoteSel
 
             }
         });
-        /*
-         * mButtonNotes.setOnClickListener(new OnClickListener() { public void
-         * onClick(View v) { Intent mGoToAllOff = new Intent(Notes.this,
-         * AllOff.class);
-         * mGoToAllOff.addFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
-         * mGoToAllOff.putExtra("lightIsOn", mLightIsOn);
-         * Notes.this.startActivity(mGoToAllOff); } });
+        
+          mButtonNotes.setOnClickListener(new OnClickListener() { public void
+          onClick(View v) {
+              if (mCurrentTool.equals("Notes Edit") || mCurrentTool.equals("Notes List")) {
+                  AllOffFragment allOffFragment = new AllOffFragment();
+                  FragmentTransaction transaction = getSupportFragmentManager()
+                          .beginTransaction();
+                  transaction.replace(R.id.fragmentcontainer, allOffFragment);
+                  transaction.addToBackStack(null);
+
+                  // Commit the transaction
+                  transaction.commit();
+                  mCurrentTool = "AllOff";
+
+              } else if (mNoteIsOpen) {
+                  onNoteSelected(mLastNoteOpen);
+              } else {
+                  NotesList notesList = new NotesList();
+                  FragmentTransaction transaction = getSupportFragmentManager()
+                          .beginTransaction();
+                  transaction.replace(R.id.fragmentcontainer, notesList);
+                  transaction.addToBackStack(null);
+
+                  // Commit the transaction
+                  transaction.commit();
+                  mCurrentTool = "Notes List";
+              }
+              
+          } });
+              
+          
+          
+              /*Intent mGoToAllOff = new Intent(Notes.this,
+          }
+          AllOff.class);
+          mGoToAllOff.addFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
+          mGoToAllOff.putExtra("lightIsOn", mLightIsOn);
+          Notes.this.startActivity(mGoToAllOff); } });
          */
         mButtonLight.setOnClickListener(new OnClickListener() {
             public void onClick(View v) {
@@ -144,16 +178,16 @@ public class NavActivity extends FragmentActivity implements NotesList.OnNoteSel
         Parameters p = mCamera.getParameters();
         p.setFlashMode(Parameters.FLASH_MODE_TORCH);
         mCamera.setParameters(p);
-        mCamera.startPreview();
+        //mCamera.startPreview();
     }
 
     private void turnLightOff() {
         Parameters params = mCamera.getParameters();
         params.setFlashMode(Parameters.FLASH_MODE_OFF);
         mCamera.setParameters(params);
-        if (!mCurrentTool.equals("Magnify")) {
-            mCamera.stopPreview();
-        }
+        //if (!mCurrentTool.equals("Magnify")) {
+        //    mCamera.stopPreview();
+        //}
     }
 
     @Override
@@ -182,9 +216,15 @@ public class NavActivity extends FragmentActivity implements NotesList.OnNoteSel
 
         // Commit the transaction
         transaction.commit();
+        mNoteIsOpen = true;
+        mCurrentTool = "Notes Edit";
 
     }
-
+    
+    public void onNoteSaved(String title) {
+        mLastNoteOpen = title;
+    }
+/*
     public void surfaceChanged(SurfaceHolder holder, int format, int width, int height) {
         // TODO Auto-generated method stub
 
@@ -205,6 +245,7 @@ public class NavActivity extends FragmentActivity implements NotesList.OnNoteSel
         mHolder = null;
 
     }
+    */
 
     @Override
     public void onDestroy() {
@@ -215,11 +256,12 @@ public class NavActivity extends FragmentActivity implements NotesList.OnNoteSel
     public void onPause() {
         if (inPreview) {
             mCamera.stopPreview();
+            inPreview = false;
         }
 
         mCamera.release();
         mCamera = null;
-        inPreview = false;
+        cameraConfigured = false;
 
         super.onPause();
     }
@@ -228,6 +270,11 @@ public class NavActivity extends FragmentActivity implements NotesList.OnNoteSel
     public void onResume() {
         super.onResume();
         mCamera = Camera.open();
+        initPreview();
+        startPreview();
+        //if (mCurrentTool.equals("Magnify")) {
+        //    startPreview();
+        //}
         if (mLightIsOn) {
             turnLightOn();
         }
@@ -248,7 +295,7 @@ public class NavActivity extends FragmentActivity implements NotesList.OnNoteSel
         public void surfaceChanged(SurfaceHolder holder,
                 int format, int width,
                 int height) {
-            initPreview(width, height);
+            initPreview(/*width, height*/);
             startPreview();
         }
 
@@ -257,7 +304,7 @@ public class NavActivity extends FragmentActivity implements NotesList.OnNoteSel
         }
     };
 
-    private void initPreview(int width, int height) {
+    private void initPreview(/*int width, int height*/) {
         if (mCamera != null && mHolder.getSurface() != null) {
             try {
                 mCamera.setPreviewDisplay(mHolder);

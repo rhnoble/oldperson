@@ -6,6 +6,8 @@ import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 
+import com.thirdlayer.oldperson.NotesList.OnNoteSelectedListener;
+
 import android.app.Activity;
 import android.content.Context;
 import android.os.Bundle;
@@ -23,6 +25,11 @@ public class EditNote extends Fragment {
     EditText mContentBox;
     String mStartingTitle;
     FileOutputStream fosContent;
+    OnNoteSavedListener mCallback;
+    
+    public interface OnNoteSavedListener {
+        public void onNoteSaved(String title);
+    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -69,6 +76,11 @@ public class EditNote extends Fragment {
     public void onAttach(Activity activity) {
         super.onAttach(activity);
         thisActivity = activity;
+        try {
+            mCallback = (OnNoteSavedListener) activity;
+        } catch (ClassCastException e) {
+            throw new ClassCastException(activity.toString() + " must imlpement OnNoteSelected");
+        }
     }
 
     @Override
@@ -87,6 +99,7 @@ public class EditNote extends Fragment {
             FileOutputStream fosContent = thisActivity.openFileOutput(mTitleToSave, Context.MODE_PRIVATE);
             fosContent.write(mContentBox.getText().toString().getBytes());
             fosContent.close();
+            mCallback.onNoteSaved(mTitleToSave);
         } catch (FileNotFoundException e) {
             // TODO Auto-generated catch block
             e.printStackTrace();
