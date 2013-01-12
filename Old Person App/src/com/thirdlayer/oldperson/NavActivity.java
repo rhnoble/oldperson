@@ -102,6 +102,7 @@ public class NavActivity extends FragmentActivity implements NotesList.OnNoteSel
                     // Commit the transaction
                     transaction.commit();
                     mCurrentTool = "AllOff";
+                    mButtonMagnify.setImageResource(R.drawable.glass);
 
                 } else {
                     MagnifyClear magnifyClear = new MagnifyClear();
@@ -114,6 +115,8 @@ public class NavActivity extends FragmentActivity implements NotesList.OnNoteSel
                     transaction.commit();
                     mCurrentTool = "Magnify";
                     mCamera.startPreview();
+                    mButtonMagnify.setImageResource(R.drawable.glass_depressed);
+                    mButtonNotes.setImageResource(R.drawable.notes);
                 }
 
             }
@@ -131,9 +134,12 @@ public class NavActivity extends FragmentActivity implements NotesList.OnNoteSel
                   // Commit the transaction
                   transaction.commit();
                   mCurrentTool = "AllOff";
+                  mButtonNotes.setImageResource(R.drawable.notes);
 
               } else if (mNoteIsOpen) {
                   onNoteSelected(mLastNoteOpen);
+                  mButtonNotes.setImageResource(R.drawable.notes_depressed);
+                  mButtonMagnify.setImageResource(R.drawable.glass);
               } else {
                   NotesList notesList = new NotesList();
                   FragmentTransaction transaction = getSupportFragmentManager()
@@ -144,6 +150,9 @@ public class NavActivity extends FragmentActivity implements NotesList.OnNoteSel
                   // Commit the transaction
                   transaction.commit();
                   mCurrentTool = "Notes List";
+                  mButtonNotes.setImageResource(R.drawable.notes_depressed);
+                  mButtonMagnify.setImageResource(R.drawable.glass);
+                  
               }
               
           } });
@@ -179,6 +188,7 @@ public class NavActivity extends FragmentActivity implements NotesList.OnNoteSel
         Parameters p = mCamera.getParameters();
         p.setFlashMode(Parameters.FLASH_MODE_TORCH);
         mCamera.setParameters(p);
+        mButtonLight.setImageResource(R.drawable.light_depressed);
         //mCamera.startPreview();
     }
 
@@ -186,6 +196,7 @@ public class NavActivity extends FragmentActivity implements NotesList.OnNoteSel
         Parameters params = mCamera.getParameters();
         params.setFlashMode(Parameters.FLASH_MODE_OFF);
         mCamera.setParameters(params);
+        mButtonLight.setImageResource(R.drawable.light);
         //if (!mCurrentTool.equals("Magnify")) {
         //    mCamera.stopPreview();
         //}

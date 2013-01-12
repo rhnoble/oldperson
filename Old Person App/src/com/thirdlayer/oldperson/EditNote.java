@@ -120,7 +120,6 @@ public class EditNote extends Fragment {
     @Override
     public void onResume() {
         super.onResume();
-        int x = 1;
     }
 
     @Override
