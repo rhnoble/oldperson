@@ -11,14 +11,7 @@
         android:id="@+id/newnote"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="New Note"
-        android:textSize="24dp"
-        android:textColor="#FFFFFF"
-        android:paddingLeft="12dp"
-        android:paddingRight="12dp"
-        android:paddingTop="4dp"
-        android:paddingBottom="4dp"
-        android:background="@drawable/green_button" />
+        android:background="@drawable/newnote" />
         
 
     <ListView

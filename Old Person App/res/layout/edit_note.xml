@@ -22,28 +22,14 @@
             android:id="@+id/delete"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Delete"
-            android:textSize="24dp"
-            android:textColor="#FFFFFF"
-            android:paddingLeft="12dp"
-            android:paddingRight="12dp"
-            android:paddingTop="4dp"
-            android:paddingBottom="4dp"
-            android:background="@drawable/delete_button" />
+            android:background="@drawable/trash" />
         
         <Button
             android:layout_alignParentRight="true"
             android:id="@+id/done"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Done"
-            android:textSize="24dp"
-            android:textColor="#FFFFFF"
-            android:paddingLeft="12dp"
-            android:paddingRight="12dp"
-            android:paddingTop="4dp"
-            android:paddingBottom="4dp"
-            android:background="@drawable/green_button" />
+            android:background="@drawable/done" />
         
     </RelativeLayout>
     
