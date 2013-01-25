@@ -39,26 +39,18 @@
         android:layout_height="70dp"
         android:inputType="text"
         android:textSize="26dp"
-        android:padding="16dp"
         android:hint="title"
-        android:background="#fef6de"
-        android:layout_margin="0dp" />
-    
-    <View
-        android:background="#e19090"
-        android:layout_height="2dp"
-        android:layout_width="match_parent" />
-    
+        android:background="@drawable/note_box" />
+  
     <EditText 
         android:id="@+id/contentbox"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:textSize="26dp"
-        android:padding="16dp"
         android:ellipsize="none"
         android:maxLines="100"
         android:scrollHorizontally="false"
         android:hint="content"
-        android:gravity="top"
-        android:background="#fef6de" />
+        android:background="@drawable/note_box"
+        android:gravity="top" />
 </LinearLayout>

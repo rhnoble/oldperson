@@ -29,7 +29,6 @@
         android:layout_height="0dp"
         android:layout_weight="1"
         android:textSize="36dp"
-        android:padding="8dp"
-        android:background="#fef6de" />    
+        android:background="@drawable/note_box" />    
 
 </LinearLayout>
