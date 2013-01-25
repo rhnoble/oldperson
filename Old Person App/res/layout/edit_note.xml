@@ -3,8 +3,8 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:background="#FEF4D7"
-    android:padding="8dp" >
+    android:background="#000000"
+    android:padding="0dp" >
     
     <View
         android:layout_width="match_parent"
@@ -14,7 +14,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        android:background="#FEF4D7"
+        android:background="#000000"
         android:paddingBottom="8dp" >
     
         <Button
@@ -22,30 +22,43 @@
             android:id="@+id/delete"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:background="@drawable/trash" />
+            android:background="@drawable/trash_button" />
         
         <Button
             android:layout_alignParentRight="true"
             android:id="@+id/done"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:background="@drawable/done" />
+            android:background="@drawable/done_button" />
         
     </RelativeLayout>
     
     <EditText 
         android:id="@+id/titlebox"
         android:layout_width="match_parent"
-        android:layout_height="50dp"
+        android:layout_height="70dp"
         android:inputType="text"
         android:textSize="26dp"
-        android:hint="title" />
+        android:padding="16dp"
+        android:hint="title"
+        android:background="#fef6de"
+        android:layout_margin="0dp" />
+    
+    <View
+        android:background="#e19090"
+        android:layout_height="2dp"
+        android:layout_width="match_parent" />
+    
     <EditText 
         android:id="@+id/contentbox"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:inputType="text"
         android:textSize="26dp"
+        android:padding="16dp"
+        android:ellipsize="none"
+        android:maxLines="100"
+        android:scrollHorizontally="false"
         android:hint="content"
-        android:gravity="top" />
+        android:gravity="top"
+        android:background="#fef6de" />
 </LinearLayout>

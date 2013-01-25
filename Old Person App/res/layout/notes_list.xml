@@ -3,22 +3,33 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:padding="8dp"
-    android:background="#ffffff" >
+    android:padding="0dp"
+    android:background="#FFFFFF" >
     
-    <Button
-        android:layout_gravity="right"
-        android:id="@+id/newnote"
-        android:layout_width="wrap_content"
+    <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@drawable/newnote" />
+        android:orientation="horizontal"
+        android:background="#000000"
+        android:paddingBottom="8dp" >
+    
+        <Button
+            android:layout_alignParentRight="true"
+            android:id="@+id/newnote"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/newnote_button" />
+        
+    </RelativeLayout>
         
 
     <ListView
         android:id="@id/android:list"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="0dp"
         android:layout_weight="1"
-        android:textSize="36dp" />
+        android:textSize="36dp"
+        android:padding="8dp"
+        android:background="#fef6de" />    
 
 </LinearLayout>
