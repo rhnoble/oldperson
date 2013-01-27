@@ -6,13 +6,14 @@ import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 
-import com.thirdlayer.oldperson.NotesList.OnNoteSelectedListener;
-
 import android.app.Activity;
+import android.app.AlertDialog;
+import android.app.Dialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.os.Bundle;
+import android.support.v4.app.DialogFragment;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentTransaction;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -67,13 +68,37 @@ public class EditNote extends Fragment {
 
         mButtonDelete.setOnClickListener(new OnClickListener() {
             public void onClick(View v) {
-                thisActivity.deleteFile(mStartingTitle);
-                mTitleBox.setText("");
-                mContentBox.setText("");
-                mCallbackDone.noteDone();
+                deleteNote();
             }
         });
 
+    }
+    
+    private void deleteNote() {
+        
+        thisActivity.deleteFile(mStartingTitle);
+        mTitleBox.setText("");
+        mContentBox.setText("");
+        mCallbackDone.noteDone();
+    }
+    
+    public class deleteNoteDialogFragment extends DialogFragment {
+        @Override
+        public Dialog onCreateDialog(Bundle savedInstanceState) {
+            AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+            builder.setMessage(R.string.delete_note_dialog)
+                   .setPositiveButton(R.string.delete, new DialogInterface.OnClickListener() {
+                       public void onClick(DialogInterface dialog, int id) {
+                           deleteNote();
+                       }
+                   })
+                   .setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {
+                       public void onClick(DialogInterface dialog, int id) {
+                       }
+                   });
+            // Create the AlertDialog object and return it
+            return builder.create();
+        }
     }
     
 
