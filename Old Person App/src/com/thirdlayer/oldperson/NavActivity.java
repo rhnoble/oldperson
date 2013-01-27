@@ -12,16 +12,20 @@ import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentTransaction;
 import android.util.Log;
 import android.view.Menu;
+import android.view.MotionEvent;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
 import android.view.View;
-import android.view.View.OnClickListener;
 import android.view.Window;
 import android.widget.ImageView;
 import android.widget.Toast;
 
-public class NavActivity extends FragmentActivity implements NotesList.OnNoteSelectedListener, EditNote.OnNoteSavedListener, EditNote.NoteDoneListener/*,
-        SurfaceHolder.Callback*/ {
+public class NavActivity extends FragmentActivity implements NotesList.OnNoteSelectedListener,
+        EditNote.OnNoteSavedListener, EditNote.NoteDoneListener/*
+                                                                * ,
+                                                                * SurfaceHolder
+                                                                * .Callback
+                                                                */{
 
     String mSelectedNote;
     // UI
@@ -90,98 +94,129 @@ public class NavActivity extends FragmentActivity implements NotesList.OnNoteSel
         mIntent = getIntent();
         mLightIsOn = mIntent.getBooleanExtra("lightIsOn", false);
 
-        mButtonMagnify.setOnClickListener(new OnClickListener() {
-            public void onClick(View v) {
-                if (mCurrentTool.equals("Magnify")) {
-                    AllOffFragment allOffFragment = new AllOffFragment();
-                    FragmentTransaction transaction = getSupportFragmentManager()
-                            .beginTransaction();
-                    transaction.replace(R.id.fragmentcontainer, allOffFragment);
-                    transaction.addToBackStack(null);
-
-                    // Commit the transaction
-                    transaction.commit();
-                    mCurrentTool = "AllOff";
-                    mButtonMagnify.setImageResource(R.drawable.glass);
-
-                } else {
-                    MagnifyClear magnifyClear = new MagnifyClear();
-                    FragmentTransaction transaction = getSupportFragmentManager()
-                            .beginTransaction();
-                    transaction.replace(R.id.fragmentcontainer, magnifyClear);
-                    transaction.addToBackStack(null);
-
-                    // Commit the transaction
-                    transaction.commit();
-                    mCurrentTool = "Magnify";
-                    mCamera.startPreview();
-                    mButtonMagnify.setImageResource(R.drawable.glass_depressed);
-                    mButtonNotes.setImageResource(R.drawable.notes);
+        mButtonMagnify.setOnTouchListener(new View.OnTouchListener() {
+            public boolean onTouch(View view, MotionEvent motionEvent) {
+                if (motionEvent.getAction() == MotionEvent.ACTION_DOWN) {
+                    mButtonMagnify.setImageResource(R.drawable.glass_onpress);
+                    
                 }
-
+                else if (motionEvent.getAction() == MotionEvent.ACTION_UP) {
+                    onMagnifyClick();
+                }
+                return true;
             }
         });
-        
-          mButtonNotes.setOnClickListener(new OnClickListener() { public void
-          onClick(View v) {
-              if (mCurrentTool.equals("Notes Edit") || mCurrentTool.equals("Notes List")) {
-                  AllOffFragment allOffFragment = new AllOffFragment();
-                  FragmentTransaction transaction = getSupportFragmentManager()
-                          .beginTransaction();
-                  transaction.replace(R.id.fragmentcontainer, allOffFragment);
-                  transaction.addToBackStack(null);
 
-                  // Commit the transaction
-                  transaction.commit();
-                  mCurrentTool = "AllOff";
-                  mButtonNotes.setImageResource(R.drawable.notes);
+        mButtonNotes.setOnTouchListener(new View.OnTouchListener() {
+            public boolean onTouch(View view, MotionEvent motionEvent) {
+                if (motionEvent.getAction() == MotionEvent.ACTION_DOWN) {
+                    mButtonNotes.setImageResource(R.drawable.notes_onpress);
 
-              } else if (mNoteIsOpen) {
-                  onNoteSelected(mLastNoteOpen);
-                  mButtonNotes.setImageResource(R.drawable.notes_depressed);
-                  mButtonMagnify.setImageResource(R.drawable.glass);
-              } else {
-                  NotesList notesList = new NotesList();
-                  FragmentTransaction transaction = getSupportFragmentManager()
-                          .beginTransaction();
-                  transaction.replace(R.id.fragmentcontainer, notesList);
-                  transaction.addToBackStack(null);
+                }
+                else if (motionEvent.getAction() == MotionEvent.ACTION_UP) {
+                    onNotesClick();
+                }
+                return true;
+            }
+        });
 
-                  // Commit the transaction
-                  transaction.commit();
-                  mCurrentTool = "Notes List";
-                  mButtonNotes.setImageResource(R.drawable.notes_depressed);
-                  mButtonMagnify.setImageResource(R.drawable.glass);
-                  
-              }
-              
-          } });
-              
-          
-          
-              /*Intent mGoToAllOff = new Intent(Notes.this,
-          }
-          AllOff.class);
-          mGoToAllOff.addFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
-          mGoToAllOff.putExtra("lightIsOn", mLightIsOn);
-          Notes.this.startActivity(mGoToAllOff); } });
+        mButtonLight.setOnTouchListener(new View.OnTouchListener() {
+            public boolean onTouch(View view, MotionEvent motionEvent) {
+                if (motionEvent.getAction() == MotionEvent.ACTION_DOWN) {
+                    mButtonLight.setImageResource(R.drawable.light_onpress);
+                }
+                else if (motionEvent.getAction() == MotionEvent.ACTION_UP) {
+                    onLightClick();
+                }
+                return true;
+            }
+        });
+
+        /*
+         * Intent mGoToAllOff = new Intent(Notes.this, } AllOff.class);
+         * mGoToAllOff.addFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
+         * mGoToAllOff.putExtra("lightIsOn", mLightIsOn);
+         * Notes.this.startActivity(mGoToAllOff); } });
          */
-        mButtonLight.setOnClickListener(new OnClickListener() {
-            public void onClick(View v) {
-                if (getApplicationContext().getPackageManager().hasSystemFeature(
-                        PackageManager.FEATURE_CAMERA_FLASH))
-                    ;
-                {
-                    if (mLightIsOn) {
-                        turnLightOff();
-                        mLightIsOn = false;
-                    } else {
-                        turnLightOn();
-                        mLightIsOn = true;
-                    }
-                }
+    }
+
+    public void onLightClick() {
+        if (getApplicationContext().getPackageManager().hasSystemFeature(
+                PackageManager.FEATURE_CAMERA_FLASH))
+            ;
+        {
+            if (mLightIsOn) {
+                turnLightOff();
+                mLightIsOn = false;
+            } else {
+                turnLightOn();
+                mLightIsOn = true;
             }
-        });
+        }
+    }
+
+    public void onNotesClick() {
+        if (mCurrentTool.equals("Notes Edit") || mCurrentTool.equals("Notes List")) {
+            AllOffFragment allOffFragment = new AllOffFragment();
+            FragmentTransaction transaction = getSupportFragmentManager()
+                    .beginTransaction();
+            transaction.replace(R.id.fragmentcontainer, allOffFragment, "alloff");
+            transaction.addToBackStack(null);
+
+            // Commit the transaction
+            transaction.commit();
+            mCurrentTool = "AllOff";
+            mButtonNotes.setImageResource(R.drawable.notes);
+
+        } else if (mNoteIsOpen) {
+            onNoteSelected(mLastNoteOpen);
+            mButtonNotes.setImageResource(R.drawable.notes_depressed);
+            mButtonMagnify.setImageResource(R.drawable.glass);
+        } else {
+            NotesList notesList = new NotesList();
+            FragmentTransaction transaction = getSupportFragmentManager()
+                    .beginTransaction();
+            transaction.replace(R.id.fragmentcontainer, notesList, "notelist");
+            transaction.addToBackStack(null);
+
+            // Commit the transaction
+            transaction.commit();
+            mCurrentTool = "Notes List";
+            mButtonNotes.setImageResource(R.drawable.notes_depressed);
+            mButtonMagnify.setImageResource(R.drawable.glass);
+
+        }
+
+    }
+
+    public void onMagnifyClick() {
+        if (mCurrentTool.equals("Magnify")) {
+            AllOffFragment allOffFragment = new AllOffFragment();
+            FragmentTransaction transaction = getSupportFragmentManager()
+                    .beginTransaction();
+            transaction.replace(R.id.fragmentcontainer, allOffFragment, "alloff");
+            transaction.addToBackStack(null);
+
+            // Commit the transaction
+            transaction.commit();
+            mCurrentTool = "AllOff";
+            mButtonMagnify.setImageResource(R.drawable.glass);
+
+        } else {
+            MagnifyClear magnifyClear = new MagnifyClear();
+            FragmentTransaction transaction = getSupportFragmentManager()
+                    .beginTransaction();
+            transaction.replace(R.id.fragmentcontainer, magnifyClear, "magnify");
+            transaction.addToBackStack(null);
+
+            // Commit the transaction
+            transaction.commit();
+            mCurrentTool = "Magnify";
+            mCamera.startPreview();
+            mButtonMagnify.setImageResource(R.drawable.glass_depressed);
+            mButtonNotes.setImageResource(R.drawable.notes);
+        }
+
     }
 
     private void turnLightOn() {
@@ -189,7 +224,7 @@ public class NavActivity extends FragmentActivity implements NotesList.OnNoteSel
         p.setFlashMode(Parameters.FLASH_MODE_TORCH);
         mCamera.setParameters(p);
         mButtonLight.setImageResource(R.drawable.light_depressed);
-        //mCamera.startPreview();
+        // mCamera.startPreview();
     }
 
     private void turnLightOff() {
@@ -197,9 +232,9 @@ public class NavActivity extends FragmentActivity implements NotesList.OnNoteSel
         params.setFlashMode(Parameters.FLASH_MODE_OFF);
         mCamera.setParameters(params);
         mButtonLight.setImageResource(R.drawable.light);
-        //if (!mCurrentTool.equals("Magnify")) {
-        //    mCamera.stopPreview();
-        //}
+        // if (!mCurrentTool.equals("Magnify")) {
+        // mCamera.stopPreview();
+        // }
     }
 
     @Override
@@ -223,7 +258,7 @@ public class NavActivity extends FragmentActivity implements NotesList.OnNoteSel
         // fragment,
         // and add the transaction to the back stack so the user can navigate
         // back
-        transaction.replace(R.id.fragmentcontainer, editNote);
+        transaction.replace(R.id.fragmentcontainer, editNote, "editnote");
         transaction.addToBackStack(null);
 
         // Commit the transaction
@@ -232,32 +267,19 @@ public class NavActivity extends FragmentActivity implements NotesList.OnNoteSel
         mCurrentTool = "Notes Edit";
 
     }
-    
+
     public void onNoteSaved(String title) {
         mLastNoteOpen = title;
     }
-/*
-    public void surfaceChanged(SurfaceHolder holder, int format, int width, int height) {
-        // TODO Auto-generated method stub
 
-    }
-
-    public void surfaceCreated(SurfaceHolder holder) {
-        mHolder = holder;
-        try {
-            mCamera.setPreviewDisplay(mHolder);
-        } catch (IOException e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
-        }
-
-    }
-
-    public void surfaceDestroyed(SurfaceHolder holder) {
-        mHolder = null;
-
-    }
-    */
+    /*
+     * public void surfaceChanged(SurfaceHolder holder, int format, int width,
+     * int height) { // TODO Auto-generated method stub } public void
+     * surfaceCreated(SurfaceHolder holder) { mHolder = holder; try {
+     * mCamera.setPreviewDisplay(mHolder); } catch (IOException e) { // TODO
+     * Auto-generated catch block e.printStackTrace(); } } public void
+     * surfaceDestroyed(SurfaceHolder holder) { mHolder = null; }
+     */
 
     @Override
     public void onDestroy() {
@@ -271,7 +293,7 @@ public class NavActivity extends FragmentActivity implements NotesList.OnNoteSel
             cameraConfigured = false;
         }
         super.onDestroy();
-        
+
     }
 
     @Override
@@ -295,9 +317,9 @@ public class NavActivity extends FragmentActivity implements NotesList.OnNoteSel
         mCamera = Camera.open();
         initPreview();
         startPreview();
-        //if (mCurrentTool.equals("Magnify")) {
-        //    startPreview();
-        //}
+        // if (mCurrentTool.equals("Magnify")) {
+        // startPreview();
+        // }
         if (mLightIsOn) {
             turnLightOn();
         }
@@ -318,7 +340,7 @@ public class NavActivity extends FragmentActivity implements NotesList.OnNoteSel
         public void surfaceChanged(SurfaceHolder holder,
                 int format, int width,
                 int height) {
-            initPreview(/*width, height*/);
+            initPreview(/* width, height */);
             startPreview();
         }
 
@@ -327,7 +349,7 @@ public class NavActivity extends FragmentActivity implements NotesList.OnNoteSel
         }
     };
 
-    private void initPreview(/*int width, int height*/) {
+    private void initPreview(/* int width, int height */) {
         if (mCamera != null && mHolder.getSurface() != null) {
             try {
                 mCamera.setPreviewDisplay(mHolder);
@@ -377,7 +399,7 @@ public class NavActivity extends FragmentActivity implements NotesList.OnNoteSel
         NotesList notesList = new NotesList();
         FragmentTransaction transaction = getSupportFragmentManager()
                 .beginTransaction();
-        transaction.replace(R.id.fragmentcontainer, notesList);
+        transaction.replace(R.id.fragmentcontainer, notesList, "notelist");
         transaction.addToBackStack(null);
 
         // Commit the transaction

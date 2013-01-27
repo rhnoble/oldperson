@@ -8,4 +8,7 @@
     <string name="title_activity_magnify">Magnify</string>
     <string name="title_activity_notes">Notes</string>
     <string name="title_activity_navactivity">Old Person App</string>
+    <string name="delete_note_dialog">Delete this note?</string>
+    <string name="cancel">Cancel</string>
+    <string name="delete">Delete</string>
 </resources>
