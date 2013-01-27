@@ -40,7 +40,8 @@
         android:inputType="text"
         android:textSize="26dp"
         android:hint="title"
-        android:background="@drawable/note_box" />
+        android:background="@drawable/note_box"
+        android:layout_marginBottom="3dp" />
   
     <EditText 
         android:id="@+id/contentbox"
@@ -52,5 +53,6 @@
         android:scrollHorizontally="false"
         android:hint="content"
         android:background="@drawable/note_box"
-        android:gravity="top" />
+        android:gravity="top"
+        android:layout_marginBottom="3dp" />
 </LinearLayout>
