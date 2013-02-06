@@ -41,6 +41,7 @@ public class NavActivity extends FragmentActivity implements NotesList.OnNoteSel
     private String mCurrentTool;
     private Boolean mNoteIsOpen;
     private String mLastNoteOpen;
+    private FragmentBackStack mFragmentBackStack;
 
     // Passed Data
     Intent mIntent;
@@ -85,6 +86,8 @@ public class NavActivity extends FragmentActivity implements NotesList.OnNoteSel
         cameraConfigured = false;
         mNoteIsOpen = false;
         mLastNoteOpen = "";
+        mFragmentBackStack = new FragmentBackStack();
+        mFragmentBackStack.addToStack("alloff");
 
         // Camera setup for flashlight
         // mCamera = Camera.open();
@@ -161,7 +164,7 @@ public class NavActivity extends FragmentActivity implements NotesList.OnNoteSel
             FragmentTransaction transaction = getSupportFragmentManager()
                     .beginTransaction();
             transaction.replace(R.id.fragmentcontainer, allOffFragment, "alloff");
-            transaction.addToBackStack(null);
+            mFragmentBackStack.addToStack("alloff");
 
             // Commit the transaction
             transaction.commit();
@@ -177,7 +180,7 @@ public class NavActivity extends FragmentActivity implements NotesList.OnNoteSel
             FragmentTransaction transaction = getSupportFragmentManager()
                     .beginTransaction();
             transaction.replace(R.id.fragmentcontainer, notesList, "notelist");
-            transaction.addToBackStack(null);
+            mFragmentBackStack.addToStack("notelist");
 
             // Commit the transaction
             transaction.commit();
@@ -195,7 +198,7 @@ public class NavActivity extends FragmentActivity implements NotesList.OnNoteSel
             FragmentTransaction transaction = getSupportFragmentManager()
                     .beginTransaction();
             transaction.replace(R.id.fragmentcontainer, allOffFragment, "alloff");
-            transaction.addToBackStack(null);
+            mFragmentBackStack.addToStack("alloff");
 
             // Commit the transaction
             transaction.commit();
@@ -207,7 +210,7 @@ public class NavActivity extends FragmentActivity implements NotesList.OnNoteSel
             FragmentTransaction transaction = getSupportFragmentManager()
                     .beginTransaction();
             transaction.replace(R.id.fragmentcontainer, magnifyClear, "magnify");
-            transaction.addToBackStack(null);
+            mFragmentBackStack.addToStack("magnify");
 
             // Commit the transaction
             transaction.commit();
@@ -259,7 +262,7 @@ public class NavActivity extends FragmentActivity implements NotesList.OnNoteSel
         // and add the transaction to the back stack so the user can navigate
         // back
         transaction.replace(R.id.fragmentcontainer, editNote, "editnote");
-        transaction.addToBackStack(null);
+        mFragmentBackStack.addToStack("editnote");
 
         // Commit the transaction
         transaction.commit();
@@ -400,11 +403,72 @@ public class NavActivity extends FragmentActivity implements NotesList.OnNoteSel
         FragmentTransaction transaction = getSupportFragmentManager()
                 .beginTransaction();
         transaction.replace(R.id.fragmentcontainer, notesList, "notelist");
-        transaction.addToBackStack(null);
+        mFragmentBackStack.addToStack("notelist");
 
         // Commit the transaction
         transaction.commit();
         mCurrentTool = "Notes List";
     }
+    
+    @Override
+    public void onBackPressed() {
+        final String mLastFragment = mFragmentBackStack.onBackPressed();
+        if (mLastFragment.equals("empty stack")) {
+            super.onBackPressed();
+        } else if (mLastFragment.equals("alloff")) {
+            AllOffFragment allOffFragment = new AllOffFragment();
+            FragmentTransaction transaction = getSupportFragmentManager()
+                    .beginTransaction();
+            transaction.replace(R.id.fragmentcontainer, allOffFragment, "alloff");
+            transaction.commit();
+            mCurrentTool = "AllOff";
+            mButtonNotes.setImageResource(R.drawable.notes);
+            mButtonMagnify.setImageResource(R.drawable.glass);
+        } else if (mLastFragment.equals("magnify")) {
+            MagnifyClear magnifyClear = new MagnifyClear();
+            FragmentTransaction transaction = getSupportFragmentManager()
+                    .beginTransaction();
+            transaction.replace(R.id.fragmentcontainer, magnifyClear, "magnify");
+            transaction.commit();
+            mCurrentTool = "Magnify";
+            mCamera.startPreview();
+            mButtonMagnify.setImageResource(R.drawable.glass_depressed);
+            mButtonNotes.setImageResource(R.drawable.notes);
+        } else if (mLastFragment.equals("notelist")) {
+            NotesList notesList = new NotesList();
+            FragmentTransaction transaction = getSupportFragmentManager()
+                    .beginTransaction();
+            transaction.replace(R.id.fragmentcontainer, notesList, "notelist");
+            mFragmentBackStack.addToStack("notelist");
+
+            // Commit the transaction
+            transaction.commit();
+            mCurrentTool = "Notes List";
+            mButtonNotes.setImageResource(R.drawable.notes_depressed);
+            mButtonMagnify.setImageResource(R.drawable.glass);
+        } else if (mLastFragment.equals("editnote")) {
+            EditNote editNote = new EditNote();
+            Bundle args = new Bundle();
+            args.putString("title", mLastNoteOpen);
+            editNote.setArguments(args);
+
+            FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+
+            // Replace whatever is in the fragment_container view with this
+            // fragment,
+            // and add the transaction to the back stack so the user can navigate
+            // back
+            transaction.replace(R.id.fragmentcontainer, editNote, "editnote");
+
+            // Commit the transaction
+            transaction.commit();
+            mNoteIsOpen = true;
+            mCurrentTool = "Notes Edit";
+            mButtonNotes.setImageResource(R.drawable.notes_depressed);
+            mButtonMagnify.setImageResource(R.drawable.glass);
+        }
+    }
+    
+    
 
 }
