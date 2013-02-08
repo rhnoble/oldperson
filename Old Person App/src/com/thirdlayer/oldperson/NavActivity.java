@@ -3,6 +3,11 @@ package com.thirdlayer.oldperson;
 
 import java.util.List;
 
+import com.thirdlayer.oldperson.KeyboardHandlingLinearLayout.KeyboardListener;
+
+
+
+import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.hardware.Camera;
@@ -10,22 +15,23 @@ import android.hardware.Camera.Parameters;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentTransaction;
+import android.support.v4.view.ViewGroupCompat;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MotionEvent;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
 import android.view.View;
 import android.view.Window;
+import android.widget.FrameLayout;
+import android.widget.FrameLayout.LayoutParams;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.Toast;
 
 public class NavActivity extends FragmentActivity implements NotesList.OnNoteSelectedListener,
-        EditNote.OnNoteSavedListener, EditNote.NoteDoneListener/*
-                                                                * ,
-                                                                * SurfaceHolder
-                                                                * .Callback
-                                                                */{
+        EditNote.OnNoteSavedListener, EditNote.NoteDoneListener, KeyboardListener {
 
     String mSelectedNote;
     // UI
@@ -33,6 +39,8 @@ public class NavActivity extends FragmentActivity implements NotesList.OnNoteSel
     private ImageView mButtonNotes;
     private ImageView mButtonLight;
     private SurfaceView mPreview;
+    private LinearLayout mNavButtons;
+    private FrameLayout mToolBox;
 
     // State flags
     private Boolean mLightIsOn;
@@ -88,6 +96,8 @@ public class NavActivity extends FragmentActivity implements NotesList.OnNoteSel
         mLastNoteOpen = "";
         mFragmentBackStack = new FragmentBackStack();
         mFragmentBackStack.addToStack("alloff");
+        mNavButtons = (LinearLayout) findViewById(R.id.nav);
+        mToolBox = (FrameLayout) findViewById(R.id.toolbox);
 
         // Camera setup for flashlight
         // mCamera = Camera.open();
@@ -467,6 +477,20 @@ public class NavActivity extends FragmentActivity implements NotesList.OnNoteSel
             mButtonNotes.setImageResource(R.drawable.notes_depressed);
             mButtonMagnify.setImageResource(R.drawable.glass);
         }
+    }
+
+    public void onKeyboardUp() {
+        mNavButtons.setVisibility(View.GONE);
+        android.view.ViewGroup.LayoutParams params = mToolBox.getLayoutParams();
+        params.height += mNavButtons.getHeight();
+        mToolBox.setLayoutParams(params);
+    }
+
+    public void onKeyboardDown() {
+        android.view.ViewGroup.LayoutParams params = mToolBox.getLayoutParams();
+        params.height -= mNavButtons.getHeight();
+        mToolBox.setLayoutParams(params);
+        mNavButtons.setVisibility(View.VISIBLE);
     }
     
     
