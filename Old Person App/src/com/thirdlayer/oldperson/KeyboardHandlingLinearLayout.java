@@ -5,36 +5,41 @@ import android.util.AttributeSet;
 import android.widget.LinearLayout;
 
 public class KeyboardHandlingLinearLayout extends LinearLayout {
-    
-    private KeyboardListener mCallbackKeyboard;
+    ResizeListener orl = null;
 
     public KeyboardHandlingLinearLayout(Context context) {
         super(context);
-        try {
-            mCallbackKeyboard = (KeyboardListener) getContext();
-        } catch (ClassCastException e) {
-            throw new ClassCastException(getContext().toString() + " must imlpement KeyboardListener");
-        }
-        // TODO Auto-generated constructor stub
     }
     
     public KeyboardHandlingLinearLayout(Context context, AttributeSet attrs) {
         super(context, attrs);
-        try {
-            mCallbackKeyboard = (KeyboardListener) getContext();
-        } catch (ClassCastException e) {
-            throw new ClassCastException(getContext().toString() + " must imlpement KeyboardListener");
-        }
-        // TODO Auto-generated constructor stub
+    }
+    public void SetOnResizeListener(ResizeListener orlExt)
+    {
+        orl = orlExt;
+    }
+    @Override
+    protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
+        super.onMeasure(widthMeasureSpec, heightMeasureSpec);
+    }
+    @Override
+    protected void onLayout(boolean changed, int l, int t, int r, int b) {
+        super.onLayout(changed, l, t, r, b);
     }
     
     @Override
     protected void onSizeChanged(int xNew, int yNew, int xOld, int yOld) {
-        if (xNew * yNew < xOld * yOld) {
-            mCallbackKeyboard.onKeyboardUp();
-        } else {
-            mCallbackKeyboard.onKeyboardDown();
+        
+        if(orl != null)
+        {
+            orl.onResize(this.getId(), xNew, yNew, xOld, yOld);
         }
+        super.onSizeChanged(xNew, yNew, xOld, yOld);
+        post(new Runnable() {
+            public void run() {
+                requestLayout();
+            }
+        });
     }
     
 //    @Override
@@ -47,10 +52,10 @@ public class KeyboardHandlingLinearLayout extends LinearLayout {
 //        }
 //    }
     
-    public interface KeyboardListener
-    {
-        public void onKeyboardUp();
-        public void onKeyboardDown();
-    }
+//    public interface KeyboardListener
+//    {
+//        public void onKeyboardUp();
+//        public void onKeyboardDown();
+//    }
 
 }
