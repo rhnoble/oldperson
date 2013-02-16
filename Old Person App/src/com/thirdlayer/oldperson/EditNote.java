@@ -16,24 +16,26 @@ import android.support.v4.app.DialogFragment;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.View.OnFocusChangeListener;
 import android.view.ViewGroup;
 import android.view.View.OnClickListener;
+import android.view.WindowManager;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
 public class EditNote extends Fragment {
 
-    Activity thisActivity;
-    EditText mTitleBox;
-    EditText mContentBox;
-    String mStartingTitle;
-    FileOutputStream fosContent;
-    OnNoteSavedListener mCallbackSaved;
-    NoteDoneListener mCallbackDone;
-    Button mButtonDone;
-    Button mButtonDelete;
-
+    private Activity thisActivity;
+    private EditText mTitleBox;
+    private EditText mContentBox;
+    private String mStartingTitle;
+    private FileOutputStream fosContent;
+    private OnNoteSavedListener mCallbackSaved;
+    private NoteDoneListener mCallbackDone;
+    private Button mButtonDone;
+    private Button mButtonDelete;
     public interface OnNoteSavedListener {
         public void onNoteSaved(String title);
     }
@@ -73,34 +75,33 @@ public class EditNote extends Fragment {
         });
 
     }
-    
+
     private void deleteNote() {
-        
+
         thisActivity.deleteFile(mStartingTitle);
         mTitleBox.setText("");
         mContentBox.setText("");
         mCallbackDone.noteDone();
     }
-    
-    public class deleteNoteDialogFragment extends DialogFragment {
+
+    public class DeleteNoteDialogFragment extends DialogFragment {
         @Override
         public Dialog onCreateDialog(Bundle savedInstanceState) {
             AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
             builder.setMessage(R.string.delete_note_dialog)
-                   .setPositiveButton(R.string.delete, new DialogInterface.OnClickListener() {
-                       public void onClick(DialogInterface dialog, int id) {
-                           deleteNote();
-                       }
-                   })
-                   .setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {
-                       public void onClick(DialogInterface dialog, int id) {
-                       }
-                   });
+                    .setPositiveButton(R.string.delete, new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog, int id) {
+                            deleteNote();
+                        }
+                    })
+                    .setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog, int id) {
+                        }
+                    });
             // Create the AlertDialog object and return it
             return builder.create();
         }
     }
-    
 
     private String getContent(String title) {
         FileInputStream fisContent;
@@ -141,7 +142,7 @@ public class EditNote extends Fragment {
             throw new ClassCastException(activity.toString() + " must imlpement OnNoteSelected");
         }
     }
-    
+
     @Override
     public void onResume() {
         super.onResume();

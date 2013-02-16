@@ -1,11 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<com.thirdlayer.oldperson.KeyboardHandlingLinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/oldperson"
+    android:background="#005500"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical" >
 
     <FrameLayout
+        android:id="@+id/toolbox"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="1" >
@@ -15,10 +18,10 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent" />
 
-        <FrameLayout
+         <FrameLayout
             android:id="@+id/fragmentcontainer"
             android:layout_width="match_parent"
-            android:layout_height="match_parent" />
+            android:layout_height="match_parent" /> 
     </FrameLayout>
 
     <LinearLayout
@@ -67,4 +70,4 @@
         
     </LinearLayout>
 
-</LinearLayout>
+</com.thirdlayer.oldperson.KeyboardHandlingLinearLayout>
