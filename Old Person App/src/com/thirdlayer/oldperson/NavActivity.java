@@ -504,6 +504,11 @@ public class NavActivity extends FragmentActivity implements NotesList.OnNoteSel
         mNavButtons.setVisibility(View.VISIBLE);
     }
     
+    @Override
+    public void onStop() {
+        mFragmentBackStack.clearStack();
+    }
+    
     
 
 }

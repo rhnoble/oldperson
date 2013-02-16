@@ -25,7 +25,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
-public class EditNote extends Fragment {
+public class EditNote extends Fragment implements DeleteDialog.NoticeDialogListener {
 
     private Activity thisActivity;
     private EditText mTitleBox;
@@ -70,7 +70,9 @@ public class EditNote extends Fragment {
 
         mButtonDelete.setOnClickListener(new OnClickListener() {
             public void onClick(View v) {
-                deleteNote();
+                DialogFragment dialog = new DeleteDialog();
+                dialog.setTargetFragment(getFragmentManager().findFragmentByTag("editnote"), 0);
+                dialog.show(getFragmentManager(),  "DeleteDialogFragment");
             }
         });
 
@@ -82,25 +84,6 @@ public class EditNote extends Fragment {
         mTitleBox.setText("");
         mContentBox.setText("");
         mCallbackDone.noteDone();
-    }
-
-    public class DeleteNoteDialogFragment extends DialogFragment {
-        @Override
-        public Dialog onCreateDialog(Bundle savedInstanceState) {
-            AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
-            builder.setMessage(R.string.delete_note_dialog)
-                    .setPositiveButton(R.string.delete, new DialogInterface.OnClickListener() {
-                        public void onClick(DialogInterface dialog, int id) {
-                            deleteNote();
-                        }
-                    })
-                    .setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {
-                        public void onClick(DialogInterface dialog, int id) {
-                        }
-                    });
-            // Create the AlertDialog object and return it
-            return builder.create();
-        }
     }
 
     private String getContent(String title) {
@@ -180,7 +163,15 @@ public class EditNote extends Fragment {
         } else {
             mCallbackSaved.onNoteSaved("");
         }
+        InputMethodManager imm = (InputMethodManager)getActivity().getSystemService(
+                Context.INPUT_METHOD_SERVICE);
+          imm.hideSoftInputFromWindow(mContentBox.getWindowToken(), 0);
         super.onPause();
+    }
+
+    public void onDialogPositiveClick(DialogFragment dialog) {
+        deleteNote();
+        
     }
 
 }
