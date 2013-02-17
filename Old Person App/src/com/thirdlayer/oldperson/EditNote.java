@@ -1,6 +1,7 @@
 
 package com.thirdlayer.oldperson;
 
+import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
@@ -36,6 +37,7 @@ public class EditNote extends Fragment implements DeleteDialog.NoticeDialogListe
     private NoteDoneListener mCallbackDone;
     private Button mButtonDone;
     private Button mButtonDelete;
+
     public interface OnNoteSavedListener {
         public void onNoteSaved(String title);
     }
@@ -72,7 +74,7 @@ public class EditNote extends Fragment implements DeleteDialog.NoticeDialogListe
             public void onClick(View v) {
                 DialogFragment dialog = new DeleteDialog();
                 dialog.setTargetFragment(getFragmentManager().findFragmentByTag("editnote"), 0);
-                dialog.show(getFragmentManager(),  "DeleteDialogFragment");
+                dialog.show(getFragmentManager(), "DeleteDialogFragment");
             }
         });
 
@@ -133,7 +135,22 @@ public class EditNote extends Fragment implements DeleteDialog.NoticeDialogListe
 
     @Override
     public void onPause() {
+        saveNote();
+        InputMethodManager imm = (InputMethodManager) getActivity().getSystemService(
+                Context.INPUT_METHOD_SERVICE);
+        imm.hideSoftInputFromWindow(mContentBox.getWindowToken(), 0);
+        super.onPause();
+    }
+
+    public void onDialogPositiveClick(DialogFragment dialog) {
+        deleteNote();
+
+    }
+
+    private void saveNote() {
         String mTitleToSave;
+        // If there is a title or contents save it, otherwise mark that the last
+        // note open was nothing
         if (!(mTitleBox.getText().toString().equals("") && mContentBox.getText().toString()
                 .equals(""))) {
             if (mTitleBox.getText().toString().equals("")) {
@@ -145,33 +162,37 @@ public class EditNote extends Fragment implements DeleteDialog.NoticeDialogListe
             } else {
                 mTitleToSave = mTitleBox.getText().toString();
             }
-            try {
-                FileOutputStream fosContent = thisActivity.openFileOutput(mTitleToSave,
-                        Context.MODE_PRIVATE);
-                fosContent.write(mContentBox.getText().toString().getBytes());
-                fosContent.close();
-                mCallbackSaved.onNoteSaved(mTitleToSave);
-            } catch (FileNotFoundException e) {
-                // TODO Auto-generated catch block
-                e.printStackTrace();
-                Toast.makeText(thisActivity, "file not found exception", Toast.LENGTH_LONG);
-            } catch (IOException e) {
-                // TODO Auto-generated catch block
-                e.printStackTrace();
-                Toast.makeText(thisActivity, "file io exception", Toast.LENGTH_LONG);
+            // Have save title, now check if it exists or was the note we opened
+            File file = getActivity().getFileStreamPath(mTitleToSave);
+            if (!mStartingTitle.equals(mTitleToSave) && file.exists()) {
+                boolean isTitleFound = false;
+                for (int i = 1; !isTitleFound; i++) {
+                    String mNewTitle = mTitleToSave + " (" + i + ")";
+                    File checkName = getActivity().getFileStreamPath(mNewTitle);
+                    if (!checkName.exists()) {
+                        mTitleToSave = mNewTitle;
+                        isTitleFound = true;
+                    }
+                }
             }
+                try {
+                    FileOutputStream fosContent = thisActivity.openFileOutput(mTitleToSave,
+                            Context.MODE_PRIVATE);
+                    fosContent.write(mContentBox.getText().toString().getBytes());
+                    fosContent.close();
+                    mCallbackSaved.onNoteSaved(mTitleToSave);
+                } catch (FileNotFoundException e) {
+                    // TODO Auto-generated catch block
+                    e.printStackTrace();
+                    Toast.makeText(thisActivity, "file not found exception", Toast.LENGTH_LONG);
+                } catch (IOException e) {
+                    // TODO Auto-generated catch block
+                    e.printStackTrace();
+                    Toast.makeText(thisActivity, "file io exception", Toast.LENGTH_LONG);
+                }
         } else {
             mCallbackSaved.onNoteSaved("");
         }
-        InputMethodManager imm = (InputMethodManager)getActivity().getSystemService(
-                Context.INPUT_METHOD_SERVICE);
-          imm.hideSoftInputFromWindow(mContentBox.getWindowToken(), 0);
-        super.onPause();
-    }
-
-    public void onDialogPositiveClick(DialogFragment dialog) {
-        deleteNote();
-        
     }
 
 }
