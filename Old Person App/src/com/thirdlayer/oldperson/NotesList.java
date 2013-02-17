@@ -1,6 +1,13 @@
 
 package com.thirdlayer.oldperson;
 
+import java.io.File;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.List;
+
 import android.app.Activity;
 import android.os.Bundle;
 import android.support.v4.app.ListFragment;
@@ -62,14 +69,32 @@ public class NotesList extends ListFragment {
     }
 
     private void populateNoteList() {
-        mNoteTitles = thisActivity.fileList();
+        ArrayList<String> mNoteTitlesSorting = new ArrayList<String>(Arrays.asList(thisActivity
+                .fileList()));
+        Collections.sort(mNoteTitlesSorting, new CompareLastModified());
+        mNoteTitles = mNoteTitlesSorting.toArray(new String[mNoteTitlesSorting.size()]);
     }
 
-     @Override
-     public void onListItemClick(ListView l, View v, int position, long id) {
-     //showDetails(position);
-     mCallback.onNoteSelected(mNoteTitles[position]);
-     }
+    class CompareLastModified implements Comparator<String> {
+
+        List<String> predefinedOrder;
+
+        public CompareLastModified() {
+        }
+
+        public int compare(String o1, String o2) {
+            long o1Mod = getActivity().getFileStreamPath(o1).lastModified();
+            long o2Mod = getActivity().getFileStreamPath(o2).lastModified();
+            return (int) (o2Mod - o1Mod);
+        }
+
+    }
+
+    @Override
+    public void onListItemClick(ListView l, View v, int position, long id) {
+        // showDetails(position);
+        mCallback.onNoteSelected(mNoteTitles[position]);
+    }
 
     @Override
     public void onResume() {
