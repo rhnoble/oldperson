@@ -429,6 +429,7 @@ public class NavActivity extends FragmentActivity implements NotesList.OnNoteSel
 
         // Commit the transaction
         transaction.commit();
+        mNoteIsOpen = false;
         mCurrentTool = "NoteList";
     }
     
