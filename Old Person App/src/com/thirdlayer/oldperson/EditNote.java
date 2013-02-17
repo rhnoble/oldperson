@@ -73,7 +73,7 @@ public class EditNote extends Fragment implements DeleteDialog.NoticeDialogListe
         mButtonDelete.setOnClickListener(new OnClickListener() {
             public void onClick(View v) {
                 DialogFragment dialog = new DeleteDialog();
-                dialog.setTargetFragment(getFragmentManager().findFragmentByTag("editnote"), 0);
+                dialog.setTargetFragment(getFragmentManager().findFragmentByTag("NoteEdit"), 0);
                 dialog.show(getFragmentManager(), "DeleteDialogFragment");
             }
         });
