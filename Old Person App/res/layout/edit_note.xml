@@ -6,13 +6,13 @@
     android:background="#000000"
     android:padding="0dp" >
     
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:orientation="vertical"
-    android:background="@drawable/note_box"
-    android:padding="0dp"
-    android:layout_margin="3dp" >
+	<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    	android:layout_width="match_parent"
+    	android:layout_height="match_parent"
+    	android:orientation="vertical"
+    	android:background="@drawable/note_box"
+    	android:padding="0dp"
+    	android:layout_margin="4dp" >
     
     <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
         android:layout_width="match_parent"
@@ -47,13 +47,15 @@
         android:hint="title"
         android:background="@android:color/transparent"
         android:cacheColorHint="@android:color/transparent"
-        android:paddingLeft="12dp"
-        android:paddingRight="12dp" />
+        android:paddingLeft="10dp"
+        android:paddingRight="10dp" />
     
     <View
         android:layout_width="match_parent"
         android:layout_height="1dp"
-        android:background="#55aed6" />
+        android:background="#55aed6"
+        android:layout_marginLeft="6dp"
+        android:layout_marginRight="6dp" />
   
     <EditText 
         android:id="@+id/contentbox"
@@ -69,6 +71,6 @@
         android:gravity="top"
         android:padding="12dp" />
     
-</LinearLayout>
+	</LinearLayout>
 
 </LinearLayout>
