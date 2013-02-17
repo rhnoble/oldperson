@@ -25,4 +25,8 @@ public class FragmentBackStack {
         String mFragmentToRaise = mFragmentStack.get(mFragmentStack.size() - 1);
         return mFragmentToRaise;
     }
+    
+    void clearStack() {
+        mFragmentStack = new ArrayList<String>();
+    }
 }
