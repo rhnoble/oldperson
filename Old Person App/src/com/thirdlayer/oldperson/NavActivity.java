@@ -3,7 +3,6 @@ package com.thirdlayer.oldperson;
 
 import java.util.List;
 
-import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.hardware.Camera;
@@ -11,17 +10,13 @@ import android.hardware.Camera.Parameters;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentTransaction;
-import android.support.v4.view.ViewGroupCompat;
 import android.util.Log;
-import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MotionEvent;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
 import android.view.View;
 import android.view.Window;
-import android.widget.FrameLayout;
-import android.widget.FrameLayout.LayoutParams;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.Toast;
@@ -37,7 +32,7 @@ public class NavActivity extends FragmentActivity implements NotesList.OnNoteSel
     private ImageView mButtonLight;
     private SurfaceView mPreview;
     private LinearLayout mNavButtons;
-    private FrameLayout mToolBox;
+    // private FrameLayout mToolBox;
 
     // State flags
     private Boolean mLightIsOn;
@@ -91,29 +86,27 @@ public class NavActivity extends FragmentActivity implements NotesList.OnNoteSel
         cameraConfigured = false;
         mNoteIsOpen = false;
         mLastNoteOpen = "";
-        mFragmentBackStack = new FragmentBackStack();
         mNavButtons = (LinearLayout) findViewById(R.id.nav);
-        mToolBox = (FrameLayout) findViewById(R.id.toolbox);
-        
+        // mToolBox = (FrameLayout) findViewById(R.id.toolbox);
+
         orlResized = new ResizeListener()
         {
             @Override
             public void onResize(int id, int xNew, int yNew, int xOld, int yOld)
             {
-             if (xNew * yNew < xOld * yOld) {
-                 onKeyboardUp();
-             } else {
-                 onKeyboardDown();
-             }
+                if (xNew * yNew < xOld * yOld) {
+                    onKeyboardUp();
+                } else {
+                    onKeyboardDown();
+                }
             }
-       };
-       ((KeyboardHandlingLinearLayout)findViewById(R.id.oldperson)).SetOnResizeListener(orlResized);
+        };
+        ((KeyboardHandlingLinearLayout) findViewById(R.id.oldperson))
+                .SetOnResizeListener(orlResized);
 
         // Camera setup for flashlight
         // mCamera = Camera.open();
-        mPreview = (SurfaceView) findViewById(R.id.preview);
-        mHolder = mPreview.getHolder();
-        mHolder.addCallback(surfaceCallback);
+
         mIntent = getIntent();
         mLightIsOn = mIntent.getBooleanExtra("lightIsOn", false);
 
@@ -121,7 +114,7 @@ public class NavActivity extends FragmentActivity implements NotesList.OnNoteSel
             public boolean onTouch(View view, MotionEvent motionEvent) {
                 if (motionEvent.getAction() == MotionEvent.ACTION_DOWN) {
                     mButtonMagnify.setImageResource(R.drawable.glass_onpress);
-                    
+
                 }
                 else if (motionEvent.getAction() == MotionEvent.ACTION_UP) {
                     onMagnifyClick();
@@ -213,7 +206,7 @@ public class NavActivity extends FragmentActivity implements NotesList.OnNoteSel
     }
 
     public void onMagnifyClick() {
-       if (mCurrentTool.equals("Magnify")) {
+        if (mCurrentTool.equals("Magnify")) {
             AllOffFragment allOffFragment = new AllOffFragment();
             FragmentTransaction transaction = getSupportFragmentManager()
                     .beginTransaction();
@@ -340,17 +333,143 @@ public class NavActivity extends FragmentActivity implements NotesList.OnNoteSel
         mCamera = Camera.open();
         mHolder = mPreview.getHolder();
         mHolder.addCallback(surfaceCallback);
+        if (cameraConfigured == null) {
+            cameraConfigured = false;
+        }
+        if (mLightIsOn == null) {
+            //if (findViewById(R.id.fragmentcontainer) != null) {
+
+                // However, if we're being restored from a previous state,
+                // then we don't need to do anything and should return or else
+                // we could end up with overlapping fragments.
+
+                // Create an instance of ExampleFragment
+//                AllOffFragment allOffFragment = new AllOffFragment();
+
+                // In case this activity was started with special instructions
+                // from
+                // an Intent,
+                // pass the Intent's extras to the fragment as arguments
+//                allOffFragment.setArguments(getIntent().getExtras());
+
+                // Add the fragment to the 'fragment_container' FrameLayout
+//                getSupportFragmentManager().beginTransaction()
+//                        .add(R.id.fragmentcontainer, allOffFragment).commit();
+                mCurrentTool = "AllOff";
+//            }
+            // Instantiate variables
+            mButtonMagnify = (ImageView) findViewById(R.id.magnify);
+            mButtonNotes = (ImageView) findViewById(R.id.notes);
+            mButtonLight = (ImageView) findViewById(R.id.light);
+            mLightIsOn = false;
+            inPreview = false;
+            cameraConfigured = false;
+            mNoteIsOpen = false;
+            mLastNoteOpen = "";
+            mNavButtons = (LinearLayout) findViewById(R.id.nav);
+            // mToolBox = (FrameLayout) findViewById(R.id.toolbox);
+
+            orlResized = new ResizeListener()
+            {
+                @Override
+                public void onResize(int id, int xNew, int yNew, int xOld, int yOld)
+                {
+                    if (xNew * yNew < xOld * yOld) {
+                        onKeyboardUp();
+                    } else {
+                        onKeyboardDown();
+                    }
+                }
+            };
+            ((KeyboardHandlingLinearLayout) findViewById(R.id.oldperson))
+                    .SetOnResizeListener(orlResized);
+
+            // Camera setup for flashlight
+            // mCamera = Camera.open();
+
+            mIntent = getIntent();
+            mLightIsOn = mIntent.getBooleanExtra("lightIsOn", false);
+
+            mButtonMagnify.setOnTouchListener(new View.OnTouchListener() {
+                public boolean onTouch(View view, MotionEvent motionEvent) {
+                    if (motionEvent.getAction() == MotionEvent.ACTION_DOWN) {
+                        mButtonMagnify.setImageResource(R.drawable.glass_onpress);
+
+                    }
+                    else if (motionEvent.getAction() == MotionEvent.ACTION_UP) {
+                        onMagnifyClick();
+                    }
+                    return true;
+                }
+            });
+
+            mButtonNotes.setOnTouchListener(new View.OnTouchListener() {
+                public boolean onTouch(View view, MotionEvent motionEvent) {
+                    if (motionEvent.getAction() == MotionEvent.ACTION_DOWN) {
+                        mButtonNotes.setImageResource(R.drawable.notes_onpress);
+
+                    }
+                    else if (motionEvent.getAction() == MotionEvent.ACTION_UP) {
+                        onNotesClick();
+                    }
+                    return true;
+                }
+            });
+
+            mButtonLight.setOnTouchListener(new View.OnTouchListener() {
+                public boolean onTouch(View view, MotionEvent motionEvent) {
+                    if (motionEvent.getAction() == MotionEvent.ACTION_DOWN) {
+                        mButtonLight.setImageResource(R.drawable.light_onpress);
+                    }
+                    else if (motionEvent.getAction() == MotionEvent.ACTION_UP) {
+                        onLightClick();
+                    }
+                    return true;
+                }
+            });
+
+            // mLightIsOn = false;
+            // onCreate(null);
+            /*
+             * } if (mButtonLight == null) { mButtonLight = (ImageView)
+             * findViewById(R.id.light); ; } if (mButtonNotes == null) {
+             * mButtonNotes = (ImageView) findViewById(R.id.notes); ; } if
+             * (mButtonMagnify == null) { mButtonMagnify = (ImageView)
+             * findViewById(R.id.magnify); ; }
+             * mButtonMagnify.setOnTouchListener(new View.OnTouchListener() {
+             * public boolean onTouch(View view, MotionEvent motionEvent) { if
+             * (motionEvent.getAction() == MotionEvent.ACTION_DOWN) {
+             * mButtonMagnify.setImageResource(R.drawable.glass_onpress); } else
+             * if (motionEvent.getAction() == MotionEvent.ACTION_UP) {
+             * onMagnifyClick(); } return true; } });
+             * mButtonNotes.setOnTouchListener(new View.OnTouchListener() {
+             * public boolean onTouch(View view, MotionEvent motionEvent) { if
+             * (motionEvent.getAction() == MotionEvent.ACTION_DOWN) {
+             * mButtonNotes.setImageResource(R.drawable.notes_onpress); } else
+             * if (motionEvent.getAction() == MotionEvent.ACTION_UP) {
+             * onNotesClick(); } return true; } });
+             * mButtonLight.setOnTouchListener(new View.OnTouchListener() {
+             * public boolean onTouch(View view, MotionEvent motionEvent) { if
+             * (motionEvent.getAction() == MotionEvent.ACTION_DOWN) {
+             * mButtonLight.setImageResource(R.drawable.light_onpress); } else
+             * if (motionEvent.getAction() == MotionEvent.ACTION_UP) {
+             * onLightClick(); } return true; } });
+             */
+        }
         initPreview();
         startPreview();
-        // if (mCurrentTool.equals("Magnify")) {
-        // startPreview();
-        // }
+        if (mCurrentTool.equals("Magnify")) {
+            mCamera.startPreview();
+        }
         if (mLightIsOn) {
             turnLightOn();
         }
+
     }
 
     private void startPreview() {
+        Log.w("startPreview() cameraConfigured =", cameraConfigured.toString());
+        Log.w("startPreview() mCamera =", mCamera.toString());
         if (cameraConfigured && mCamera != null) {
             mCamera.startPreview();
             inPreview = true;
@@ -366,6 +485,7 @@ public class NavActivity extends FragmentActivity implements NotesList.OnNoteSel
                 int format, int width,
                 int height) {
             initPreview(/* width, height */);
+            Log.w("surfaceChanged()", holder.toString());
             startPreview();
         }
 
@@ -432,7 +552,7 @@ public class NavActivity extends FragmentActivity implements NotesList.OnNoteSel
         mNoteIsOpen = false;
         mCurrentTool = "NoteList";
     }
-    
+
     @Override
     public void onBackPressed() {
         final String mLastFragment = mFragmentBackStack.onBackPressed();
@@ -479,7 +599,8 @@ public class NavActivity extends FragmentActivity implements NotesList.OnNoteSel
 
             // Replace whatever is in the fragment_container view with this
             // fragment,
-            // and add the transaction to the back stack so the user can navigate
+            // and add the transaction to the back stack so the user can
+            // navigate
             // back
             transaction.replace(R.id.fragmentcontainer, editNote, "NoteEdit");
 
@@ -494,30 +615,42 @@ public class NavActivity extends FragmentActivity implements NotesList.OnNoteSel
 
     public void onKeyboardUp() {
         mNavButtons.setVisibility(View.GONE);
-//        android.view.ViewGroup.LayoutParams params = mToolBox.getLayoutParams();
-//        params.height = 1000;
-//        mToolBox.setLayoutParams(params);
+        // android.view.ViewGroup.LayoutParams params =
+        // mToolBox.getLayoutParams();
+        // params.height = 1000;
+        // mToolBox.setLayoutParams(params);
     }
 
     public void onKeyboardDown() {
-//        android.view.ViewGroup.LayoutParams params = mToolBox.getLayoutParams();
-//        params.height -= mNavButtons.getHeight();
-//        mToolBox.setLayoutParams(params);
+        // android.view.ViewGroup.LayoutParams params =
+        // mToolBox.getLayoutParams();
+        // params.height -= mNavButtons.getHeight();
+        // mToolBox.setLayoutParams(params);
         mNavButtons.setVisibility(View.VISIBLE);
     }
-    
+
     @Override
     public void onStop() {
-        mFragmentBackStack.clearStack();
+        mFragmentBackStack = null;
+        mPreview = null;
+        mHolder = null;
         super.onStop();
     }
-    
+
+    @Override
+    public void onRestart() {
+
+        super.onRestart();
+    }
+
     @Override
     public void onStart() {
+        mPreview = (SurfaceView) findViewById(R.id.preview);
+        mHolder = mPreview.getHolder();
+        mHolder.addCallback(surfaceCallback);
+        mFragmentBackStack = new FragmentBackStack();
         mFragmentBackStack.addToStack(mCurrentTool);
         super.onStart();
     }
-    
-    
 
 }

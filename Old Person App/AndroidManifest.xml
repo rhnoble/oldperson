@@ -18,10 +18,12 @@
             android:name=".NavActivity"
             android:label="@string/title_activity_navactivity"
             android:screenOrientation="portrait"
+            android:launchMode="singleInstance"
+            android:alwaysRetainTaskState="true"
             android:windowSoftInputMode="adjustResize" >
+            
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>

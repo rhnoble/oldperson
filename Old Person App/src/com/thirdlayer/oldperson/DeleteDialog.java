@@ -6,7 +6,6 @@ import android.app.Dialog;
 import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.v4.app.DialogFragment;
-import android.support.v4.app.Fragment;
 
 public class DeleteDialog extends DialogFragment {
     @Override
@@ -40,10 +39,7 @@ public class DeleteDialog extends DialogFragment {
         // Verify that the host activity implements the callback interface
         try {
             // Instantiate the NoticeDialogListener so we can send events to the host
-            Fragment thisFragment = getTargetFragment();
-            
             mListener = (NoticeDialogListener) getTargetFragment();
-            int x = 1;
         } catch (ClassCastException e) {
             // The activity doesn't implement the interface, throw exception
             throw new ClassCastException(getTargetFragment().toString()

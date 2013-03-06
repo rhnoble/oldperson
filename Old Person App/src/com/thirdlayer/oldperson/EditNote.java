@@ -8,19 +8,14 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 
 import android.app.Activity;
-import android.app.AlertDialog;
-import android.app.Dialog;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.v4.app.DialogFragment;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.view.View.OnFocusChangeListener;
 import android.view.ViewGroup;
 import android.view.View.OnClickListener;
-import android.view.WindowManager;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
@@ -32,7 +27,6 @@ public class EditNote extends Fragment implements DeleteDialog.NoticeDialogListe
     private EditText mTitleBox;
     private EditText mContentBox;
     private String mStartingTitle;
-    private FileOutputStream fosContent;
     private OnNoteSavedListener mCallbackSaved;
     private NoteDoneListener mCallbackDone;
     private Button mButtonDone;
@@ -97,6 +91,7 @@ public class EditNote extends Fragment implements DeleteDialog.NoticeDialogListe
             StringBuffer fileContent = new StringBuffer("");
 
             byte[] buffer = new byte[1024];
+            @SuppressWarnings("unused") // Used for the while loop
             int length;
             while ((length = fisContent.read(buffer)) != -1) {
                 fileContent.append(new String(buffer));
@@ -184,11 +179,11 @@ public class EditNote extends Fragment implements DeleteDialog.NoticeDialogListe
                 } catch (FileNotFoundException e) {
                     // TODO Auto-generated catch block
                     e.printStackTrace();
-                    Toast.makeText(thisActivity, "file not found exception", Toast.LENGTH_LONG);
+                    Toast.makeText(thisActivity, "file not found exception", Toast.LENGTH_LONG).show();
                 } catch (IOException e) {
                     // TODO Auto-generated catch block
                     e.printStackTrace();
-                    Toast.makeText(thisActivity, "file io exception", Toast.LENGTH_LONG);
+                    Toast.makeText(thisActivity, "file io exception", Toast.LENGTH_LONG).show();
                 }
         } else {
             mCallbackSaved.onNoteSaved("");
