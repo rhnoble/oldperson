@@ -22,10 +22,10 @@ import android.widget.LinearLayout;
 import android.widget.Toast;
 
 public class NavActivity extends FragmentActivity implements NotesList.OnNoteSelectedListener,
-        EditNote.OnNoteSavedListener, EditNote.NoteDoneListener {
+        EditNote.OnNoteSavedListener, EditNote.NoteDoneListener, ResizeListener{
 
     String mSelectedNote;
-    ResizeListener orlResized;
+/*    ResizeListener mResizeListener;*/
     // UI
     private ImageView mButtonMagnify;
     private ImageView mButtonNotes;
@@ -89,20 +89,10 @@ public class NavActivity extends FragmentActivity implements NotesList.OnNoteSel
         mNavButtons = (LinearLayout) findViewById(R.id.nav);
         // mToolBox = (FrameLayout) findViewById(R.id.toolbox);
 
-        orlResized = new ResizeListener()
-        {
-            @Override
-            public void onResize(int id, int xNew, int yNew, int xOld, int yOld)
-            {
-                if (xNew * yNew < xOld * yOld) {
-                    onKeyboardUp();
-                } else {
-                    onKeyboardDown();
-                }
-            }
-        };
+
+
         ((KeyboardHandlingLinearLayout) findViewById(R.id.oldperson))
-                .SetOnResizeListener(orlResized);
+                .SetOnResizeListener(this);
 
         // Camera setup for flashlight
         // mCamera = Camera.open();
@@ -288,15 +278,6 @@ public class NavActivity extends FragmentActivity implements NotesList.OnNoteSel
         mLastNoteOpen = title;
     }
 
-    /*
-     * public void surfaceChanged(SurfaceHolder holder, int format, int width,
-     * int height) { // TODO Auto-generated method stub } public void
-     * surfaceCreated(SurfaceHolder holder) { mHolder = holder; try {
-     * mCamera.setPreviewDisplay(mHolder); } catch (IOException e) { // TODO
-     * Auto-generated catch block e.printStackTrace(); } } public void
-     * surfaceDestroyed(SurfaceHolder holder) { mHolder = null; }
-     */
-
     @Override
     public void onDestroy() {
         if (inPreview) {
@@ -369,22 +350,7 @@ public class NavActivity extends FragmentActivity implements NotesList.OnNoteSel
             mNavButtons = (LinearLayout) findViewById(R.id.nav);
             // mToolBox = (FrameLayout) findViewById(R.id.toolbox);
 
-            orlResized = new ResizeListener()
-            {
-                @Override
-                public void onResize(int id, int xNew, int yNew, int xOld, int yOld)
-                {
-                    if (xNew * yNew < xOld * yOld) {
-                        onKeyboardUp();
-                    } else {
-                        onKeyboardDown();
-                    }
-                }
-            };
-            ((KeyboardHandlingLinearLayout) findViewById(R.id.oldperson))
-                    .SetOnResizeListener(orlResized);
-
-            // Camera setup for flashlight
+           // Camera setup for flashlight
             // mCamera = Camera.open();
 
             mIntent = getIntent();
@@ -615,17 +581,9 @@ public class NavActivity extends FragmentActivity implements NotesList.OnNoteSel
 
     public void onKeyboardUp() {
         mNavButtons.setVisibility(View.GONE);
-        // android.view.ViewGroup.LayoutParams params =
-        // mToolBox.getLayoutParams();
-        // params.height = 1000;
-        // mToolBox.setLayoutParams(params);
     }
 
     public void onKeyboardDown() {
-        // android.view.ViewGroup.LayoutParams params =
-        // mToolBox.getLayoutParams();
-        // params.height -= mNavButtons.getHeight();
-        // mToolBox.setLayoutParams(params);
         mNavButtons.setVisibility(View.VISIBLE);
     }
 
@@ -653,4 +611,13 @@ public class NavActivity extends FragmentActivity implements NotesList.OnNoteSel
         super.onStart();
     }
 
+    public void onResize(int id, int xNew, int yNew, int xOld, int yOld) {
+        {
+            if (xNew * yNew < xOld * yOld) {
+                onKeyboardUp();
+            } else {
+                onKeyboardDown();
+            }
+        }
+    }
 }

@@ -5,7 +5,7 @@ import android.util.AttributeSet;
 import android.widget.LinearLayout;
 
 public class KeyboardHandlingLinearLayout extends LinearLayout {
-    ResizeListener orl = null;
+    ResizeListener resizeListener = null;
 
     public KeyboardHandlingLinearLayout(Context context) {
         super(context);
@@ -14,9 +14,9 @@ public class KeyboardHandlingLinearLayout extends LinearLayout {
     public KeyboardHandlingLinearLayout(Context context, AttributeSet attrs) {
         super(context, attrs);
     }
-    public void SetOnResizeListener(ResizeListener orlExt)
+    public void SetOnResizeListener(ResizeListener resizeListener)
     {
-        orl = orlExt;
+        this.resizeListener = resizeListener;
     }
     @Override
     protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
@@ -29,33 +29,15 @@ public class KeyboardHandlingLinearLayout extends LinearLayout {
     
     @Override
     protected void onSizeChanged(int xNew, int yNew, int xOld, int yOld) {
-        
-        if(orl != null)
-        {
-            orl.onResize(this.getId(), xNew, yNew, xOld, yOld);
-        }
         super.onSizeChanged(xNew, yNew, xOld, yOld);
+        if(resizeListener != null)
+        {
+            resizeListener.onResize(this.getId(), xNew, yNew, xOld, yOld);
+        }
         post(new Runnable() {
             public void run() {
                 requestLayout();
             }
         });
     }
-    
-//    @Override
-//    protected void onFinishInflate() {
-//        super.onFinishInflate();
-//        try {
-//            mCallbackKeyboard = (KeyboardListener) getContext();
-//        } catch (ClassCastException e) {
-//            throw new ClassCastException(getContext().toString() + " must imlpement KeyboardListener");
-//        }
-//    }
-    
-//    public interface KeyboardListener
-//    {
-//        public void onKeyboardUp();
-//        public void onKeyboardDown();
-//    }
-
 }
