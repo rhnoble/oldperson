@@ -1,29 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.thirdlayer.oldperson"
     android:versionCode="2"
     android:versionName="1.1" >
 
     <uses-sdk
-        android:minSdkVersion="8"
-        android:targetSdkVersion="16" />
+        android:minSdkVersion="14"
+        android:targetSdkVersion="22" />
 
     <uses-permission android:name="android.permission.FLASHLIGHT" />
     <uses-permission android:name="android.permission.CAMERA" />
+
+    <uses-feature android:name="android.hardware.camera" />
+    <uses-feature android:name="android.hardware.camera.autofocus" />
+    <uses-feature android:name="android.hardware.camera.flash" />
 
     <application
         android:icon="@drawable/ic_launcher"
         android:label="@string/app_name"
         android:theme="@style/AppTheme" >
         <activity
-            android:name=".NavActivity"
-            android:label="@string/title_activity_navactivity"
-            android:screenOrientation="portrait"
-            android:launchMode="singleInstance"
+            android:name="com.thirdlayer.oldperson.NavActivity"
             android:alwaysRetainTaskState="true"
+            android:label="@string/title_activity_navactivity"
+            android:launchMode="singleInstance"
+            android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustResize" >
-            
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
+
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>

@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<items version="2" >
+
+    <item
+        jar="/home/harry/Android/Sdk/extras/android/m2repository/com/android/support/support-v4/18.0.0/support-v4-18.0.0.jar"
+        jumboMode="false"
+        revision="21.1.2"
+        sha1="44ec51e9d395a47aab135e5e1b556c0007442156">
+        <dex dex="/home/harry/dev/sendhub-mobile-android/Old Person App/app/build/intermediates/pre-dexed/debug/support-v4-18.0.0-a7de0941f7210e7c92c82dd8a6b3f1e633ff76b1.jar" />
+    </item>
+
+</items>

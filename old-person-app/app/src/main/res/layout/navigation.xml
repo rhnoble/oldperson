@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.thirdlayer.oldperson.KeyboardHandlingLinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/oldperson"
+    android:background="#005500"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical" >
+
+    <FrameLayout
+        android:id="@+id/toolbox"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1" >
+        
+        <SurfaceView
+            android:id="@+id/preview"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
+
+         <FrameLayout
+            android:id="@+id/fragmentcontainer"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" /> 
+    </FrameLayout>
+
+    <LinearLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        android:id="@+id/nav"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="#666666"
+        android:gravity="bottom"
+        android:orientation="horizontal"
+        android:padding="2dp" >
+
+        <ImageView
+            xmlns:android="http://schemas.android.com/apk/res/android"
+            android:id="@+id/magnify"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:adjustViewBounds="true"
+            android:padding="4dp"
+            android:scaleType="centerInside"
+            android:src="@drawable/glass" />
+
+        <ImageView
+            xmlns:android="http://schemas.android.com/apk/res/android"
+            android:id="@+id/light"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:adjustViewBounds="true"
+            android:padding="4dp"
+            android:scaleType="centerInside"
+            android:src="@drawable/light" />
+
+        <ImageView
+            xmlns:android="http://schemas.android.com/apk/res/android"
+            android:id="@+id/notes"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:adjustViewBounds="true"
+            android:padding="4dp"
+            android:scaleType="centerInside"
+            android:src="@drawable/notes" />
+
+        
+    </LinearLayout>
+
+</com.thirdlayer.oldperson.KeyboardHandlingLinearLayout>
