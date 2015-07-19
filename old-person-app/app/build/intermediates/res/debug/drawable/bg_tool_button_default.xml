@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layer-list xmlns:android="http://schemas.android.com/apk/res/android">
+    <item android:top="@dimen/button_shadow_y" android:left="@dimen/button_shadow_x">
+        <shape xmlns:android="http://schemas.android.com/apk/res/android"
+            android:shape="rectangle">
+            <solid android:color="@color/tool_button_shadow" />
+            <corners android:radius="@dimen/tool_button_corner_radius" />
+        </shape>
+    </item>
+    <item android:right="@dimen/button_shadow_x" android:bottom="@dimen/button_shadow_y">
+        <shape xmlns:android="http://schemas.android.com/apk/res/android"
+            android:shape="rectangle">
+            <solid android:color="@color/tool_button_bg" />
+            <corners android:radius="@dimen/tool_button_corner_radius" />
+        </shape>
+    </item>
+</layer-list><!-- From: file:/Users/angelapotter/Documents/Third%20Layer/Old%20Person%20App/oldperson/old-person-app/app/src/main/res/drawable/bg_tool_button_default.xml -->

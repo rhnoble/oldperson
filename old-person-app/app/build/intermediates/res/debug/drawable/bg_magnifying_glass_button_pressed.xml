@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layer-list xmlns:android="http://schemas.android.com/apk/res/android">
+    <item>
+        <shape xmlns:android="http://schemas.android.com/apk/res/android"
+            android:shape="rectangle">
+            <solid android:color="@color/magnifying_glass_button_pressed_border" />
+            <corners android:radius="@dimen/tool_button_corner_radius" />
+        </shape>
+    </item>
+    <item
+        android:top="@dimen/tool_button_pressed_border"
+        android:right="@dimen/tool_button_pressed_border"
+        android:bottom="@dimen/tool_button_pressed_border"
+        android:left="@dimen/tool_button_pressed_border">
+        <shape xmlns:android="http://schemas.android.com/apk/res/android"
+            android:shape="rectangle">
+            <solid android:color="@color/magnifying_glass_button_pressed_bg" />
+            <corners android:radius="@dimen/tool_button_corner_radius" />
+        </shape>
+    </item>
+</layer-list><!-- From: file:/Users/angelapotter/Documents/Third%20Layer/Old%20Person%20App/oldperson/old-person-app/app/src/main/res/drawable/bg_magnifying_glass_button_pressed.xml -->

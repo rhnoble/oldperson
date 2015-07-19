@@ -2,4 +2,13 @@
 
     <style name="AppTheme" parent="android:Theme.Light.NoTitleBar" />
 
+    <style name="ToolButton" parent="@android:style/Widget.ImageButton">
+        <item name="android:layout_width">0dp</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_weight">1</item>
+        <item name="android:layout_margin">@dimen/tool_button_gutter</item>
+        <item name="android:adjustViewBounds">true</item>
+        <item name="android:scaleType">centerInside</item>
+    </style>
+
 </resources>

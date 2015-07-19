@@ -1,6 +1,24 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <!-- From: file:/home/harry/dev/oldperson/old-person-app/app/src/main/res/values/strings.xml -->
+    <!-- From: file:/Users/angelapotter/Documents/Third%20Layer/Old%20Person%20App/oldperson/old-person-app/app/src/main/res/values/colors.xml -->
+    <eat-comment/>
+    <color name="light_button_pressed_bg">#ff8400</color>
+    <color name="light_button_pressed_border">#ffc35b</color>
+    <color name="magnifying_glass_button_pressed_bg">#01a9b3</color>
+    <color name="magnifying_glass_button_pressed_border">#4fd2da</color>
+    <color name="notebook_button_pressed_bg">#4800ff</color>
+    <color name="notebook_button_pressed_border">#8a5cff</color>
+    <color name="tool_button_bg">#fff</color>
+    <color name="tool_button_shadow">#aaa</color>
+    <color name="transparent">#0000</color>
+    <!-- From: file:/Users/angelapotter/Documents/Third%20Layer/Old%20Person%20App/oldperson/old-person-app/app/src/main/res/values/dimens.xml -->
+    <eat-comment/>
+    <dimen name="button_shadow_x">3dp</dimen>
+    <dimen name="button_shadow_y">4dp</dimen>
+    <dimen name="tool_button_corner_radius">24dp</dimen>
+    <dimen name="tool_button_gutter">6dp</dimen>
+    <dimen name="tool_button_pressed_border">4dp</dimen>
+    <!-- From: file:/Users/angelapotter/Documents/Third%20Layer/Old%20Person%20App/oldperson/old-person-app/app/src/main/res/values/strings.xml -->
     <eat-comment/>
     <string name="app_name">Old Person App</string>
     <string name="cancel">Cancel</string>
@@ -11,7 +29,15 @@
     <string name="title_activity_magnify">Magnify</string>
     <string name="title_activity_navactivity">Old Person App</string>
     <string name="title_activity_notes">Notes</string>
-    <!-- From: file:/home/harry/dev/oldperson/old-person-app/app/src/main/res/values/styles.xml -->
+    <!-- From: file:/Users/angelapotter/Documents/Third%20Layer/Old%20Person%20App/oldperson/old-person-app/app/src/main/res/values/styles.xml -->
     <eat-comment/>
     <style name="AppTheme" parent="android:Theme.Light.NoTitleBar"/>
+    <style name="ToolButton" parent="@android:style/Widget.ImageButton">
+        <item name="android:layout_width">0dp</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_weight">1</item>
+        <item name="android:layout_margin">@dimen/tool_button_gutter</item>
+        <item name="android:adjustViewBounds">true</item>
+        <item name="android:scaleType">centerInside</item>
+    </style>
 </resources>

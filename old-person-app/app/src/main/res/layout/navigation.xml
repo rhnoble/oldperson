@@ -2,7 +2,7 @@
 <com.thirdlayer.oldperson.KeyboardHandlingLinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/oldperson"
-    android:background="#005500"
+    android:background="#333"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical" >
@@ -29,43 +29,31 @@
         android:id="@+id/nav"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="#666666"
+        android:background="@color/transparent"
         android:gravity="bottom"
         android:orientation="horizontal"
-        android:padding="2dp" >
+        android:padding="@dimen/tool_button_gutter" >
 
-        <ImageView
+        <ImageButton
             xmlns:android="http://schemas.android.com/apk/res/android"
             android:id="@+id/magnify"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:adjustViewBounds="true"
-            android:padding="4dp"
-            android:scaleType="centerInside"
-            android:src="@drawable/glass" />
+            style="@style/ToolButton"
+            android:background="@drawable/bg_magnifying_glass_button"
+            android:src="@drawable/magnifying_glass_icon" />
 
         <ImageView
             xmlns:android="http://schemas.android.com/apk/res/android"
             android:id="@+id/light"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:adjustViewBounds="true"
-            android:padding="4dp"
-            android:scaleType="centerInside"
-            android:src="@drawable/light" />
+            style="@style/ToolButton"
+            android:background="@drawable/bg_magnifying_glass_button"
+            android:src="@drawable/light_icon" />
 
         <ImageView
             xmlns:android="http://schemas.android.com/apk/res/android"
             android:id="@+id/notes"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:adjustViewBounds="true"
-            android:padding="4dp"
-            android:scaleType="centerInside"
-            android:src="@drawable/notes" />
+            style="@style/ToolButton"
+            android:background="@drawable/bg_magnifying_glass_button"
+            android:src="@drawable/notebook_icon" />
 
         
     </LinearLayout>

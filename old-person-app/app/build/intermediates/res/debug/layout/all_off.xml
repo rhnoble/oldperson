@@ -12,7 +12,7 @@
         android:layout_height="0dp"
         android:layout_weight="1"
         android:text="@string/instructions"
-        android:textSize="36dp"
+        android:textSize="36sp"
         android:textColor="#FFFFFF"
         android:background="#000000"
         android:paddingLeft="20dp"
@@ -20,4 +20,4 @@
         android:paddingTop="20dp"
         android:layout_marginBottom="3dp" />
 
-</LinearLayout><!-- From: file:/home/harry/dev/oldperson/old-person-app/app/src/main/res/layout/all_off.xml -->
+</LinearLayout><!-- From: file:/Users/angelapotter/Documents/Third%20Layer/Old%20Person%20App/oldperson/old-person-app/app/src/main/res/layout/all_off.xml -->

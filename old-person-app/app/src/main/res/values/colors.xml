@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="tool_button_bg">#fff</color>
+    <color name="tool_button_shadow">#aaa</color>
+
+    <color name="magnifying_glass_button_pressed_bg">#01a9b3</color>
+    <color name="magnifying_glass_button_pressed_border">#4fd2da</color>
+
+    <color name="light_button_pressed_bg">#ff8400</color>
+    <color name="light_button_pressed_border">#ffc35b</color>
+
+    <color name="notebook_button_pressed_bg">#4800ff</color>
+    <color name="notebook_button_pressed_border">#8a5cff</color>
+
+    <color name="transparent">#0000</color>
+</resources>
